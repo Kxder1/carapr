@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Pay Off Car Loan Early Calculator: Interest You Save</title>
+<meta name="description" content="Free calculator to see how much interest you save and how many months sooner you finish your car loan by paying extra each month.">
+<link rel="canonical" href="https://carapr.org/pay-off-car-loan-early.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html" aria-current="page"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>How much will extra payments save you?</h1>
+    <p class="lede">Enter your loan balance, rate, and months left, then add an extra amount each month to see the interest you save and the date you finish.</p>
+  </section>
+
+  <section class="calc" aria-label="Pay off car loan early calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="bal">Loan balance today</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="bal" type="number" inputmode="decimal" min="0" step="100" value="24000"></div>
+        </div>
+        <div class="field">
+          <label for="apr">APR</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1" value="7.9"><span class="suf">%</span></div>
+          <p class="hint">Not sure? Use the <a href="index.html">car APR calculator</a>.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="n">Months left on the loan</label>
+          <div class="control"><input id="n" type="number" inputmode="numeric" min="1" max="120" step="1" value="60"></div>
+        </div>
+        <div class="field">
+          <label for="extra">Extra paid each month</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="extra" type="number" inputmode="decimal" min="0" step="10" value="100"></div>
+        </div>
+      </div>
+
+      <div class="financed"><span>Your regular monthly payment</span><strong id="pay">$0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Interest you save</p>
+          <p class="big" id="resBig">$0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Paid off in</span><b id="sPayoff">0</b></div>
+          <div class="stat"><span>Time saved</span><b id="sSaved">0</b></div>
+          <div class="stat"><span>Interest with extra payments</span><b id="sInt">$0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Interest saved versus interest still paid"><i class="p" id="barP"></i><i class="c" id="barC"></i></div>
+          <div class="legend"><span id="legP">Interest saved</span><span class="c" id="legC">Interest still paid</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Different extra payments</h2>
+          <table>
+            <thead><tr><th scope="col">Extra per month</th><th scope="col">Paid off in</th><th scope="col">Interest saved</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>How extra payments shorten a car loan</h2>
+    <p>Each car payment first covers the interest that built up since your last payment. Whatever is left reduces the balance you owe. An extra payment goes straight to the balance, so next month's interest is figured on a smaller amount. That small difference repeats every month, which is why even modest extra payments cut the loan by months.</p>
+
+    <h2>How this calculator works</h2>
+    <p>It finds the regular payment your remaining months imply, adds your extra amount, and then runs the loan one month at a time until the balance reaches zero. The final payment is usually smaller than the rest. The savings figure compares the interest you would pay with and without the extra payments.</p>
+
+    <h2>Before you pay extra</h2>
+    <ul>
+      <li>Ask your lender whether extra payments are applied to the principal. Some lenders hold the money toward your next payment unless you say otherwise.</li>
+      <li>Check your loan agreement for a prepayment penalty. They are uncommon on car loans, but confirm.</li>
+      <li>Compare your car loan rate to your other debts. Paying extra on the highest-rate debt first saves the most.</li>
+      <li>Keep an emergency fund. Extra money sent to the lender is hard to get back.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>Is it worth paying extra on a car loan?</summary><p>It depends on your rate. The higher the APR, the more each extra dollar saves. If you have a higher-rate debt, such as a credit card, paying that down first usually saves more. If your car loan rate is high, you might also look at the <a href="car-loan-refinance.html">refinance calculator</a>.</p></details>
+    <details><summary>Is it better to pay extra each month or a lump sum?</summary><p>Both reduce interest. The sooner extra money reaches the balance, the more interest it saves, so a lump sum now saves more than the same amount spread over the next year.</p></details>
+    <details><summary>Will my lender let me pay extra?</summary><p>Most do. Confirm there is no prepayment penalty and ask how to mark the extra amount as a principal-only payment.</p></details>
+    <details><summary>Does paying off a car loan early affect my credit?</summary><p>Closing any account can change your credit mix and the average age of your accounts, so you may see a small, temporary change. Lenders report the loan as paid in full.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. Your lender's payoff statement is the official figure.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+function monthlyPayment(L, aprPct, n) {
+  var r = aprPct / 1200;
+  if (r < 1e-12) return L / n;
+  return L * r / (1 - Math.pow(1 + r, -n));
+}
+// Pays a fixed amount (regular payment plus extra) each month until the balance is gone.
+// Returns { months, interest } or null if the payment never covers the interest.
+function payoffPlan(B, aprPct, M, extra) {
+  var r = aprPct / 1200, bal = B, interest = 0, k = 0, pay = M + extra;
+  while (bal > 0.005 && k < 1200) {
+    var i = bal * r;
+    if (pay <= i + 1e-9) return null;
+    interest += i;
+    k++;
+    bal -= Math.min(pay - i, bal);
+  }
+  return { months: k, interest: interest };
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  var usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function span(m) {
+    var y = Math.floor(m / 12), mo = m % 12, parts = [];
+    if (y > 0) parts.push(y + (y === 1 ? ' year' : ' years'));
+    if (mo > 0 || y === 0) parts.push(mo + (mo === 1 ? ' month' : ' months'));
+    return parts.join(' ');
+  }
+  function when(m) {
+    var d = new Date();
+    d.setMonth(d.getMonth() + m);
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function render() {
+    var B = num('bal'), apr = num('apr'), n = Math.round(num('n')), extra = num('extra');
+    $('pay').textContent = '$0';
+    if (!(B > 0)) return showError('Enter your loan balance to get started.');
+    if (!(n >= 1) || n > 120) return showError('Enter the months left on your loan, from 1 to 120.');
+    if (apr < 0 || apr > 100) return showError('Enter an APR between 0% and 100%.');
+    if (extra < 0) return showError('The extra payment cannot be negative.');
+
+    var M = monthlyPayment(B, apr, n);
+    $('pay').textContent = usd2.format(M);
+    var base = payoffPlan(B, apr, M, 0), plan = payoffPlan(B, apr, M, extra);
+    if (!base || !plan) return showError('These numbers do not pay down the loan. Check the rate and months left.');
+
+    var saved = Math.max(base.interest - plan.interest, 0);
+    var monthsSaved = base.months - plan.months;
+    $('msg').hidden = true;
+    $('body').hidden = false;
+    $('resBig').textContent = usd0.format(saved);
+    $('resSub').textContent = extra > 0
+      ? 'Paying ' + usd0.format(extra) + ' extra each month finishes the loan in ' + when(plan.months) + ' instead of ' + when(base.months) + '. Without extra payments you would pay ' + usd0.format(base.interest) + ' in interest.'
+      : 'Add an extra monthly amount to see how much interest you could save. Without extra payments you would pay ' + usd0.format(base.interest) + ' in interest.';
+    $('sPayoff').textContent = span(plan.months);
+    $('sSaved').textContent = monthsSaved > 0 ? span(monthsSaved) : 'None';
+    $('sInt').textContent = usd0.format(plan.interest);
+
+    var total = base.interest > 0 ? base.interest : 1;
+    var pS = base.interest > 0 ? (saved / total) * 100 : 0;
+    $('barP').style.width = pS + '%';
+    $('barC').style.width = (100 - pS) + '%';
+    $('bar').setAttribute('aria-label', Math.round(pS) + ' percent of the original interest is saved');
+    $('legP').textContent = 'Interest saved ' + usd0.format(saved);
+    $('legC').textContent = 'Interest still paid ' + usd0.format(plan.interest);
+
+    var list = [0, 50, 100, 250, 500];
+    if (list.indexOf(extra) === -1) list.push(extra);
+    list.sort(function (a, b) { return a - b; });
+    var tbody = $('rows');
+    tbody.textContent = '';
+    list.forEach(function (x) {
+      var p = payoffPlan(B, apr, M, x);
+      if (!p) return;
+      var tr = document.createElement('tr');
+      if (x === extra) tr.className = 'now';
+      [usd0.format(x) + (x === extra ? ' (yours)' : ''), span(p.months), usd0.format(Math.max(base.interest - p.interest, 0))].forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['bal', 'apr', 'n', 'extra'].forEach(function (id) { $(id).addEventListener('input', render); });
+  render();
+})();
+</script>
+</body>
+</html>

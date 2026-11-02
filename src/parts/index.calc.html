@@ -1,0 +1,100 @@
+  <section class="calc" aria-label="Car loan APR calculator">
+    <form class="inputs" id="form" onsubmit="return false" novalidate>
+      <div class="seg" role="group" aria-label="What do you want to find?">
+        <button type="button" id="mode-find" aria-pressed="true">Find my APR</button>
+        <button type="button" id="mode-pay" aria-pressed="false">Find my payment</button>
+      </div>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="price">Vehicle price</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="price" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Include taxes and dealer fees.</p>
+        </div>
+        <div class="field">
+          <label for="down">Down payment and trade-in</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="down" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Cash plus trade-in value.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="term">Loan term</label>
+          <div class="control"><select id="term"></select></div>
+        </div>
+        <div class="field" id="f-payment">
+          <label for="payment" id="payLabel">Monthly payment</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="payment" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint" id="paymentHint">Principal and interest only.</p>
+        </div>
+        <div class="field" id="f-apr" hidden>
+          <label for="apr" id="aprLabel">APR</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+          <p class="hint" id="aprHint">From a lender quote or offer.</p>
+        </div>
+      </div>
+
+      <div class="field" id="f-ratetype" hidden>
+        <label for="ratetype">How the lender quoted the rate</label>
+        <div class="control">
+          <select id="ratetype">
+            <option value="reducing">Reducing balance (interest on what you still owe)</option>
+            <option value="flat">Flat rate (interest on the full amount for the whole term)</option>
+          </select>
+        </div>
+        <p class="hint" id="ratetypeHint">A flat rate looks lower than it really is. The calculator converts it to the true rate.</p>
+      </div>
+
+      <label class="check" id="f-vat" hidden><input type="checkbox" id="vat" checked> <span id="vatLabel">My payment includes 16% IVA on the interest</span></label>
+
+      <div class="row">
+        <div class="field">
+          <label for="balloon" id="balloonLabel">Final balloon payment (optional)</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="balloon" type="number" inputmode="decimal" min="0" step="any" value="0"></div>
+          <p class="hint" id="balloonHint">A large last payment, as in PCP or residual-value finance. Leave at 0 if your loan has none.</p>
+        </div>
+        <div class="field" id="f-fees">
+          <label for="fees" id="feesLabel">Lender fees taken from the loan (optional)</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="fees" type="number" inputmode="decimal" min="0" step="any" value="0"></div>
+          <p class="hint" id="feesHint">Fees that reduce the money you receive. Leave at 0 if you have none.</p>
+        </div>
+      </div>
+
+      <div class="financed"><span>Amount financed</span><strong id="financed" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow" id="resLabel">Your APR</p>
+          <p class="big" id="resBig" translate="no">0%</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats" id="rateStats"></div>
+
+        <div class="stats">
+          <div class="stat"><span>Amount financed</span><b id="sFinanced" translate="no">0</b></div>
+          <div class="stat"><span id="sInterestLabel">Total interest</span><b id="sInterest" translate="no">0</b></div>
+          <div class="stat"><span>Total of payments</span><b id="sTotal" translate="no">0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Share of payments that repay the loan versus interest"><i class="p" id="barP"></i><i class="c" id="barC"></i></div>
+          <div class="legend"><span id="legP">Loan</span><span class="c" id="legC">Interest</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Same loan at nearby rates</h2>
+          <table>
+            <thead><tr><th scope="col" id="thRate">Rate</th><th scope="col" id="thPay">Monthly payment</th><th scope="col">Total interest</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

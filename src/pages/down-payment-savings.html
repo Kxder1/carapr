@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Car Down Payment Savings Calculator: How Long Until You Can Buy</title>
+<meta name="description" content="Free car down payment savings calculator. See how many months it takes to save for your down payment, with interest, and what saving a little more each month changes.">
+<link rel="canonical" href="https://carapr.org/down-payment-savings.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html" aria-current="page"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>How long until you can afford your down payment?</h1>
+    <p class="lede">Pick a car price and a down payment target, enter what you have saved and what you can add each month, and see the date you reach it.</p>
+  </section>
+
+  <section class="calc" aria-label="Car down payment savings calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="price">Car price</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="price" type="number" inputmode="decimal" min="0" step="500" value="30000"></div>
+        </div>
+        <div class="field">
+          <label for="pct">Down payment target</label>
+          <div class="control">
+            <select id="pct">
+              <option value="10">10% of the price</option>
+              <option value="15">15% of the price</option>
+              <option value="20" selected>20% of the price</option>
+              <option value="25">25% of the price</option>
+              <option value="30">30% of the price</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="saved">Already saved</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="saved" type="number" inputmode="decimal" min="0" step="100" value="2000"></div>
+        </div>
+        <div class="field">
+          <label for="monthly">Saved each month</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="monthly" type="number" inputmode="decimal" min="0" step="25" value="400"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="apy">Savings account yield (APY)</label>
+        <div class="control has-suf"><input id="apy" type="number" inputmode="decimal" min="0" step="0.1" value="4"><span class="suf">%</span></div>
+        <p class="hint">Example rate. Use your own account's APY, or 0 if you keep cash at home.</p>
+      </div>
+
+      <div class="financed"><span>Down payment goal</span><strong id="goal">$0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Time to your goal</p>
+          <p class="big" id="resBig">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Down payment goal</span><b id="sGoal">$0</b></div>
+          <div class="stat"><span>You deposit</span><b id="sDep">$0</b></div>
+          <div class="stat"><span>Interest earned</span><b id="sInt">$0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Where the money in your down payment fund comes from"><i class="p" id="barP"></i><i class="c" id="barC"></i><i class="m" id="barM"></i></div>
+          <div class="legend"><span id="legP">Already saved</span><span class="c" id="legC">New deposits</span><span class="m" id="legM">Interest</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>If you save a little more each month</h2>
+          <table>
+            <thead><tr><th scope="col">Monthly deposit</th><th scope="col">Time</th><th scope="col">Reach it by</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>How much should you put down on a car?</h2>
+    <p>A common guideline is about 20% down on a new car and about 10% on a used one. The exact amount is up to you, but a bigger down payment means a smaller loan, a lower monthly payment, and less interest over the life of the loan.</p>
+    <p>It also protects you from owing more than the car is worth. New cars lose value quickly in the first year, and a small down payment can leave you with a loan balance above the car's resale value. The <a href="negative-equity.html">negative equity calculator</a> shows whether that has happened to you.</p>
+
+    <h2>How this calculator works</h2>
+    <p>Each month your balance earns interest at the monthly rate (the APY divided by 12, a close approximation), then your deposit is added at the end of the month. The calculator repeats that month by month until your balance reaches the goal. The goal is your car price multiplied by the down payment percentage.</p>
+
+    <h2>Ways to reach your goal sooner</h2>
+    <ul>
+      <li>Set up an automatic transfer on payday so the deposit happens before you can spend it.</li>
+      <li>Keep the money in a high-yield savings account instead of a standard checking account.</li>
+      <li>Add one-time money to your savings, like a tax refund, a bonus, or the sale of an old car.</li>
+      <li>Aim at a slightly cheaper car. Lowering the price also lowers the down payment target.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>Can I buy a car with no money down?</summary><p>Some lenders allow it, but you will borrow the full price and pay more interest. You also start the loan owing more than the car is worth, which is risky if the car is damaged or you need to sell it early.</p></details>
+    <details><summary>Does my trade-in count as a down payment?</summary><p>Yes. The value of your trade-in can be used in place of cash. If you plan to trade in a car, subtract its value from your goal by entering it as money you have already saved.</p></details>
+    <details><summary>Is the interest on my savings taxable?</summary><p>In the United States, interest from a regular savings account is generally taxable income. The amount in this calculator is before taxes.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. Real account balances depend on your bank's rules and rate changes.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+// Months until the balance reaches goal. Deposit is added at the end of each month, after interest.
+// Returns { months, balance } or null if the goal is not reached within 100 years.
+function monthsToGoal(saved, monthly, apyPct, goal) {
+  var r = apyPct / 1200, bal = saved;
+  if (bal >= goal) return { months: 0, balance: bal };
+  for (var m = 1; m <= 1200; m++) {
+    bal = bal * (1 + r) + monthly;
+    if (bal >= goal) return { months: m, balance: bal };
+  }
+  return null;
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+  function span(m) {
+    var y = Math.floor(m / 12), mo = m % 12, parts = [];
+    if (y > 0) parts.push(y + (y === 1 ? ' year' : ' years'));
+    if (mo > 0 || y === 0) parts.push(mo + (mo === 1 ? ' month' : ' months'));
+    return parts.join(' ');
+  }
+  function when(m) {
+    var d = new Date();
+    d.setMonth(d.getMonth() + m);
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function render() {
+    var price = num('price'), pct = num('pct'), saved = num('saved'), monthly = num('monthly'), apy = num('apy');
+    var goal = price * pct / 100;
+    $('goal').textContent = usd0.format(goal);
+
+    if (!(price > 0)) return showError('Enter the car price to get started.');
+    if (saved >= goal) return showError('You already have ' + usd0.format(saved) + ', which covers the ' + usd0.format(goal) + ' goal.');
+    if (apy < 0 || apy > 30) return showError('Enter a yield between 0% and 30%.');
+    var res = monthsToGoal(saved, monthly, apy, goal);
+    if (!res) return showError('At ' + usd0.format(monthly) + ' a month you would not reach ' + usd0.format(goal) + ' in a reasonable time. Raise the monthly amount or lower the car price.');
+
+    var deposits = monthly * res.months;
+    var interest = Math.max(res.balance - saved - deposits, 0);
+    $('msg').hidden = true;
+    $('body').hidden = false;
+    $('resBig').textContent = span(res.months);
+    $('resSub').textContent = 'You reach ' + usd0.format(goal) + ' around ' + when(res.months) + '.';
+    $('sGoal').textContent = usd0.format(goal);
+    $('sDep').textContent = usd0.format(deposits);
+    $('sInt').textContent = usd0.format(interest);
+
+    var total = saved + deposits + interest;
+    var pS = (saved / total) * 100, pD = (deposits / total) * 100, pI = 100 - pS - pD;
+    $('barP').style.width = pS + '%';
+    $('barC').style.width = pD + '%';
+    $('barM').style.width = pI + '%';
+    $('bar').setAttribute('aria-label', 'Your fund is ' + Math.round(pS) + ' percent money already saved, ' + Math.round(pD) + ' percent new deposits, and ' + Math.round(pI) + ' percent interest');
+    $('legP').textContent = 'Already saved ' + usd0.format(saved);
+    $('legC').textContent = 'New deposits ' + usd0.format(deposits);
+    $('legM').textContent = 'Interest ' + usd0.format(interest);
+
+    var tbody = $('rows');
+    tbody.textContent = '';
+    [0, 50, 100, 200].forEach(function (d) {
+      var mo = monthly + d;
+      var r = monthsToGoal(saved, mo, apy, goal);
+      var tr = document.createElement('tr');
+      if (d === 0) tr.className = 'now';
+      var cells = [usd0.format(mo) + (d === 0 ? ' (yours)' : ''), r ? span(r.months) : 'Over 100 years', r ? when(r.months) : '-'];
+      cells.forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['price', 'saved', 'monthly', 'apy'].forEach(function (id) { $(id).addEventListener('input', render); });
+  $('pct').addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

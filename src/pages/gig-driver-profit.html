@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Gig Driver Profit Calculator: Real Hourly Pay After Costs</title>
+<meta name="description" content="Free gig driver profit calculator for delivery and rideshare drivers. Enter earnings, hours, miles, and gas to see your real hourly pay after car costs and taxes.">
+<link rel="canonical" href="https://carapr.org/gig-driver-profit.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html" aria-current="page"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>What do you really earn per hour driving?</h1>
+    <p class="lede">Delivery and rideshare pay looks bigger before gas, wear on your car, and taxes. Enter a typical week to see what is left.</p>
+  </section>
+
+  <section class="calc" aria-label="Gig driver profit calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note">Example numbers for one week are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="earn">Earnings for the week</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="earn" type="number" inputmode="decimal" min="0" step="10" value="700"></div>
+          <p class="hint">Pay plus tips, before any costs.</p>
+        </div>
+        <div class="field">
+          <label for="hours">Hours worked</label>
+          <div class="control"><input id="hours" type="number" inputmode="decimal" min="0" step="1" value="25"></div>
+          <p class="hint">Include waiting time between orders.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="miles">Miles driven</label>
+          <div class="control"><input id="miles" type="number" inputmode="decimal" min="0" step="10" value="400"></div>
+          <p class="hint">All miles while working, including to pickups.</p>
+        </div>
+        <div class="field">
+          <label for="mpg">Fuel economy (MPG)</label>
+          <div class="control"><input id="mpg" type="number" inputmode="decimal" min="0" step="1" value="28"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="gas">Gas price per gallon</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="gas" type="number" inputmode="decimal" min="0" step="0.05" value="3.20"></div>
+          <p class="hint">Example price. Use what you pay.</p>
+        </div>
+        <div class="field">
+          <label for="wear">Other car costs per mile</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="wear" type="number" inputmode="decimal" min="0" step="0.01" value="0.10"></div>
+          <p class="hint">Oil, tires, repairs, and value lost. Example amount.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="tax">Set aside for taxes</label>
+          <div class="control has-suf"><input id="tax" type="number" inputmode="decimal" min="0" max="60" step="1" value="25"><span class="suf">%</span></div>
+          <p class="hint">Of income after the mileage deduction. Rough guess.</p>
+        </div>
+        <div class="field">
+          <label for="rate">Standard mileage rate</label>
+          <div class="control has-suf"><input id="rate" type="number" inputmode="decimal" min="0" step="0.5" value="72.5"><span class="suf">&cent;</span></div>
+          <p class="hint">72.5 cents is the <a href="https://www.irs.gov/newsroom/irs-sets-2026-business-standard-mileage-rate-at-725-cents-per-mile-up-25-cents" target="_blank" rel="noopener">IRS 2026 business rate</a>.</p>
+        </div>
+      </div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Your hourly pay after car costs</p>
+          <p class="big" id="resBig">$0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Profit per week</span><b id="sProfit">$0</b></div>
+          <div class="stat"><span>Profit per mile</span><b id="sMile">$0</b></div>
+          <div class="stat"><span>Set aside for taxes</span><b id="sTax">$0</b></div>
+          <div class="stat"><span>Take-home per week</span><b id="sTake">$0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Where your earnings go"><i class="p" id="barP"></i><i class="c" id="barC"></i><i class="m" id="barM"></i></div>
+          <div class="legend"><span id="legP">Profit</span><span class="c" id="legC">Gas</span><span class="m" id="legM">Other car costs</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>If gas prices change</h2>
+          <table>
+            <thead><tr><th scope="col">Gas price</th><th scope="col">Hourly after costs</th><th scope="col">Profit per week</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>Why gross pay misleads gig drivers</h2>
+    <p>Apps show what you were paid. They do not show that you also paid for gas, oil changes, tires, repairs, and the value your car lost with every mile. Those costs come out of your pocket, and they grow with the miles you drive. A job that pays well per hour but needs a lot of miles can leave you with much less than it looks like.</p>
+
+    <h2>How this calculator works</h2>
+    <div class="formula" tabindex="0">profit = earnings − gas cost − other car costs<br>real hourly pay = profit ÷ hours</div>
+    <p>Gas cost is miles divided by MPG, times the price of a gallon. Other car costs are the miles times the per-mile amount you enter. For taxes, the calculator subtracts the standard mileage deduction (miles times the IRS rate) from your earnings, then sets aside the percentage you choose.</p>
+
+    <h2>Taxes and the mileage deduction</h2>
+    <p>Gig drivers are usually treated as self-employed, which means paying both income tax and self-employment tax on profit. You can generally deduct either your actual car costs or the IRS standard mileage rate for business miles, which is 72.5 cents per mile for 2026. The standard rate is meant to cover gas, maintenance, insurance, and wear, so you generally cannot also deduct gas separately. Keep a log of dates and miles. Rules depend on your situation, so check with a tax professional.</p>
+
+    <h2>How to earn more per hour</h2>
+    <ul>
+      <li>Cut dead miles. Orders close together pay more per mile than long drives for the same fee.</li>
+      <li>Track which hours and areas pay best, then work those.</li>
+      <li>Keep the car in good shape. Proper tire pressure and regular service protect your MPG.</li>
+      <li>Skip orders that pay less than your cost per mile plus a fair hourly rate.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>How much should I set aside for taxes as a gig driver?</summary><p>Many self-employed people set aside around 20% to 30% of their profit, but the right amount depends on your total income, deductions, and where you live. A tax professional can give you a number for your situation.</p></details>
+    <details><summary>Should I count waiting time as hours worked?</summary><p>Yes, for this calculator. Time spent waiting for orders is time you cannot spend elsewhere, so it belongs in your hours.</p></details>
+    <details><summary>Can I deduct both gas and the standard mileage rate?</summary><p>Generally no. The standard mileage rate already includes gas and other vehicle costs. If you deduct actual expenses instead, you track gas, repairs, insurance, and the rest separately.</p></details>
+    <details><summary>What other car costs should I include per mile?</summary><p>Oil changes, tires, repairs, insurance share for business use, and how much the car loses in value. Dividing a year of those costs by a year of miles gives your own figure.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not tax or financial advice. Confirm deductions with a tax professional.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+function gigWeek(o) {
+  var gasCost = o.miles / o.mpg * o.gas;
+  var wearCost = o.miles * o.wear;
+  var profit = o.earn - gasCost - wearCost;
+  var taxable = Math.max(o.earn - o.miles * o.rate / 100, 0);
+  var tax = taxable * o.tax / 100;
+  return { gasCost: gasCost, wearCost: wearCost, profit: profit, tax: tax, take: profit - tax,
+           hourly: profit / o.hours, grossHourly: o.earn / o.hours, takeHourly: (profit - tax) / o.hours };
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  var usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var signed2 = function (v) { return (v < 0 ? '-' : '') + usd2.format(Math.abs(v)); };
+  var signed0 = function (v) { return (v < 0 ? '-' : '') + usd0.format(Math.abs(v)); };
+
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function read() {
+    return { earn: num('earn'), hours: num('hours'), miles: num('miles'), mpg: num('mpg'), gas: num('gas'), wear: num('wear'), tax: num('tax'), rate: num('rate') };
+  }
+
+  function render() {
+    var o = read();
+    if (!(o.earn > 0)) return showError('Enter what you earned in a typical week.');
+    if (!(o.hours > 0)) return showError('Enter the hours you worked in that week.');
+    if (!(o.mpg > 0)) return showError('Enter your car\'s MPG.');
+    if (o.miles < 0 || o.gas < 0 || o.wear < 0 || o.rate < 0) return showError('Miles, gas price, and costs cannot be negative.');
+    if (o.tax < 0 || o.tax > 60) return showError('Enter a tax set-aside between 0% and 60%.');
+
+    var r = gigWeek(o);
+    $('msg').hidden = true;
+    $('body').hidden = false;
+
+    $('resBig').textContent = signed2(r.hourly);
+    $('resBig').style.color = r.hourly < 0 ? 'var(--warm)' : '';
+    $('resSub').textContent = 'Before costs it looks like ' + usd2.format(r.grossHourly) + ' an hour. After setting aside taxes, about ' + signed2(r.takeHourly) + ' an hour.';
+    $('sProfit').textContent = signed0(r.profit);
+    $('sMile').textContent = o.miles > 0 ? signed2(r.profit / o.miles) : '-';
+    $('sTax').textContent = usd0.format(r.tax);
+    $('sTake').textContent = signed0(r.take);
+
+    var total = Math.max(o.earn, r.gasCost + r.wearCost);
+    var pP = Math.max(r.profit, 0) / total * 100, pG = r.gasCost / total * 100, pW = 100 - pP - pG;
+    $('barP').style.width = pP + '%';
+    $('barC').style.width = pG + '%';
+    $('barM').style.width = pW + '%';
+    $('bar').setAttribute('aria-label', Math.round(pP) + ' percent of earnings is profit, ' + Math.round(pG) + ' percent goes to gas, and ' + Math.round(pW) + ' percent to other car costs');
+    $('legP').textContent = 'Profit ' + signed0(r.profit);
+    $('legC').textContent = 'Gas ' + usd0.format(r.gasCost);
+    $('legM').textContent = 'Other car costs ' + usd0.format(r.wearCost);
+
+    var tbody = $('rows');
+    tbody.textContent = '';
+    [-0.5, 0, 0.5, 1].forEach(function (d) {
+      var g = o.gas + d;
+      if (g < 0) return;
+      var w = gigWeek({ earn: o.earn, hours: o.hours, miles: o.miles, mpg: o.mpg, gas: g, wear: o.wear, tax: o.tax, rate: o.rate });
+      var tr = document.createElement('tr');
+      if (d === 0) tr.className = 'now';
+      [usd2.format(g) + (d === 0 ? ' (yours)' : ''), signed2(w.hourly), signed0(w.profit)].forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['earn', 'hours', 'miles', 'mpg', 'gas', 'wear', 'tax', 'rate'].forEach(function (id) { $(id).addEventListener('input', render); });
+  render();
+})();
+</script>
+</body>
+</html>

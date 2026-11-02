@@ -1,0 +1,9 @@
+// Cloudflare deploy settings. The built site in dist/ is served as static files.
+// "name" must match the Worker that serves carapr.org in your Cloudflare dashboard.
+{
+  "name": "carapr",
+  "compatibility_date": "2026-10-15",
+  "assets": {
+    "directory": "./dist"
+  }
+}

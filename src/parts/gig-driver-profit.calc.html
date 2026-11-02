@@ -1,0 +1,89 @@
+  <section class="calc" aria-label="Gig driver profit calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers for one week are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="earn">Earnings for the week</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="earn" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Pay plus tips, before any costs.</p>
+        </div>
+        <div class="field">
+          <label for="hours">Hours worked</label>
+          <div class="control"><input id="hours" type="number" inputmode="decimal" min="0" step="1"></div>
+          <p class="hint">Include waiting time between orders.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="dist" id="distLabel">Miles driven</label>
+          <div class="control"><input id="dist" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Everything driven while working, including to pickups.</p>
+        </div>
+        <div class="field">
+          <label for="econ" id="econLabel">Fuel economy (MPG)</label>
+          <div class="control"><input id="econ" type="number" inputmode="decimal" min="0" step="0.1"></div>
+          <p class="hint" id="econHint"></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="fuel" id="fuelLabel">Fuel price per gallon</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="fuel" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Example price. Use what you pay.</p>
+        </div>
+        <div class="field">
+          <label for="wear" id="wearLabel">Other car costs per mile</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="wear" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Oil, tires, repairs, and value lost. Example amount.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="tax">Set aside for taxes</label>
+          <div class="control has-suf"><input id="tax" type="number" inputmode="decimal" min="0" max="60" step="1"><span class="suf">%</span></div>
+          <p class="hint" id="taxHint">Of your taxable profit. A rough guess.</p>
+        </div>
+        <div class="field" id="f-rate">
+          <label for="rate" id="rateLabel">Mileage rate</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="rate" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint" id="rateHint"></p>
+        </div>
+      </div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Your hourly pay after car costs</p>
+          <p class="big" id="resBig" translate="no">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Profit per week</span><b id="sProfit" translate="no">0</b></div>
+          <div class="stat"><span id="sUnitLabel">Profit per mile</span><b id="sUnit" translate="no">0</b></div>
+          <div class="stat"><span>Set aside for taxes</span><b id="sTax" translate="no">0</b></div>
+          <div class="stat"><span>Take-home per week</span><b id="sTake" translate="no">0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Where your earnings go"><i class="p" id="barP"></i><i class="c" id="barC"></i><i class="m" id="barM"></i></div>
+          <div class="legend"><span id="legP">Profit</span><span class="c" id="legC">Fuel</span><span class="m" id="legM">Other car costs</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>If fuel prices change</h2>
+          <table>
+            <thead><tr><th scope="col">Fuel price</th><th scope="col">Hourly after costs</th><th scope="col">Profit per week</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

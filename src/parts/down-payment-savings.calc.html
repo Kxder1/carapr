@@ -1,0 +1,74 @@
+  <section class="calc" aria-label="Car down payment savings calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="price">Car price</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="price" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+        <div class="field">
+          <label for="pct">Down payment target</label>
+          <div class="control"><select id="pct"></select></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="saved">Already saved</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="saved" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+        <div class="field">
+          <label for="monthly">Saved each month</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="monthly" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apy">Savings interest rate (yearly)</label>
+          <div class="control has-suf"><input id="apy" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+          <p class="hint" id="apyHint">An example rate. Use your own account's rate.</p>
+        </div>
+        <div class="field">
+          <label for="tax" id="taxLabel">Tax on interest</label>
+          <div class="control has-suf"><input id="tax" type="number" inputmode="decimal" min="0" max="60" step="0.1"><span class="suf">%</span></div>
+          <p class="hint" id="taxHint"></p>
+        </div>
+      </div>
+
+      <div class="financed"><span>Down payment goal</span><strong id="goal" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Time to your goal</p>
+          <p class="big" id="resBig">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Down payment goal</span><b id="sGoal" translate="no">0</b></div>
+          <div class="stat"><span>You deposit</span><b id="sDep" translate="no">0</b></div>
+          <div class="stat"><span>Interest after tax</span><b id="sInt" translate="no">0</b></div>
+          <div class="stat"><span>Tax paid</span><b id="sTax" translate="no">0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Where the money in your down payment fund comes from"><i class="p" id="barP"></i><i class="c" id="barC"></i><i class="m" id="barM"></i></div>
+          <div class="legend"><span id="legP">Already saved</span><span class="c" id="legC">New deposits</span><span class="m" id="legM">Interest</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>If you save a little more each month</h2>
+          <table>
+            <thead><tr><th scope="col">Monthly deposit</th><th scope="col">Time</th><th scope="col">Reach it by</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

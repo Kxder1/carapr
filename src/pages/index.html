@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Car APR Calculator: Find the Real APR on Your Car Loan</title>
+<meta name="description" content="Free car loan APR calculator in dollars, pesos, yen, won, euros, pounds, rupees and more. Find your real APR and total interest from your monthly payment.">
+<!-- After you buy a domain, replace this with your real address. -->
+<link rel="canonical" href="https://carapr.org/">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "What is APR on a car loan?",
+     "acceptedAnswer": {"@type": "Answer", "text": "APR is the yearly cost of borrowing, shown as a percentage. It includes the interest rate plus certain lender fees that are rolled into the loan, so it is usually the best number for comparing offers."}},
+    {"@type": "Question", "name": "How do I find my APR if I only know my monthly payment?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Enter the amount financed, the term, and the payment into the calculator. It works backward to find the rate that makes your payments repay the loan exactly. If the lender took fees out of the loan, add them so the APR reflects the true cost."}},
+    {"@type": "Question", "name": "Is APR the same as the interest rate?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Not always. The interest rate sets your monthly interest charge. APR also counts fees that reduce the money you actually receive, so APR is equal to or higher than the interest rate."}},
+    {"@type": "Question", "name": "What is a good APR for a car loan?",
+     "acceptedAnswer": {"@type": "Answer", "text": "It depends on your credit score, the loan term, whether the car is new or used, and current market rates. The most reliable way to judge an offer is to get quotes from a credit union, a bank, and the dealer, then compare their APRs for the same amount and term."}},
+    {"@type": "Question", "name": "Does a longer loan term mean a higher APR?",
+     "acceptedAnswer": {"@type": "Answer", "text": "Often, yes. Lenders usually charge higher rates on longer terms, and a longer term also means you pay interest for more months, so total interest rises even when the monthly payment drops."}},
+    {"@type": "Question", "name": "Will this match the APR on my loan paperwork?",
+     "acceptedAnswer": {"@type": "Answer", "text": "It should be very close. Lenders may treat an odd first payment date or certain add-ons differently, so the APR on your loan documents is the official figure."}}
+  ]
+}
+</script>
+
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html" aria-current="page"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Find the real APR on your car loan</h1>
+    <p class="lede">Know your monthly payment but not your rate? Enter the loan details and this calculator works out the APR, the interest you will pay, and what a different rate would change.</p>
+  </section>
+
+  <section class="calc" aria-label="Car loan APR calculator">
+    <form class="inputs" id="form" onsubmit="return false" novalidate>
+      <div class="seg" role="group" aria-label="What do you want to find?">
+        <button type="button" id="mode-find" aria-pressed="true">Find my APR</button>
+        <button type="button" id="mode-pay" aria-pressed="false">Find my payment</button>
+      </div>
+      <p class="note">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="price">Vehicle price</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="price" type="number" inputmode="decimal" min="0" step="100" value="32000"></div>
+          <p class="hint">Include taxes and dealer fees.</p>
+        </div>
+        <div class="field">
+          <label for="down">Down payment and trade-in</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="down" type="number" inputmode="decimal" min="0" step="100" value="3000"></div>
+          <p class="hint">Cash plus trade-in value.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="term">Loan term</label>
+          <div class="control">
+            <select id="term">
+              <option value="24">24 months</option>
+              <option value="36">36 months</option>
+              <option value="48">48 months</option>
+              <option value="60" selected>60 months</option>
+              <option value="72">72 months</option>
+              <option value="84">84 months</option>
+              <option value="96">96 months</option>
+            </select>
+          </div>
+        </div>
+        <div class="field" id="f-payment">
+          <label for="payment">Monthly payment</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="payment" type="number" inputmode="decimal" min="0" step="1" value="587"></div>
+          <p class="hint">Principal and interest only.</p>
+        </div>
+        <div class="field" id="f-apr" hidden>
+          <label for="apr">APR</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1" value="7.9"><span class="suf">%</span></div>
+          <p class="hint">From a lender quote or offer.</p>
+        </div>
+      </div>
+
+      <div class="field" id="f-fees">
+        <label for="fees">Lender fees taken from the loan (optional)</label>
+        <div class="control has-pre"><span class="pre">$</span><input id="fees" type="number" inputmode="decimal" min="0" step="50" value="0"></div>
+        <p class="hint">Origination or processing fees that reduce the money you receive. Leave at 0 if you have none.</p>
+      </div>
+
+      <div class="financed"><span>Amount financed</span><strong id="financed">$0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow" id="resLabel">Your APR</p>
+          <p class="big" id="resBig">0%</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Amount financed</span><b id="sFinanced">$0</b></div>
+          <div class="stat"><span>Total interest</span><b id="sInterest">$0</b></div>
+          <div class="stat"><span>Total of payments</span><b id="sTotal">$0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Share of payments that repay the loan versus interest"><i class="p" id="barP"></i><i class="c" id="barC"></i></div>
+          <div class="legend"><span id="legP">Loan</span><span class="c" id="legC">Interest</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Same loan at nearby rates</h2>
+          <table>
+            <thead><tr><th scope="col">Rate</th><th scope="col">Monthly payment</th><th scope="col">Total interest</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>What APR means on a car loan</h2>
+    <p>APR stands for annual percentage rate. It is the yearly cost of borrowing money, shown as a percentage. On a car loan it covers the interest rate plus any lender fees that come out of the loan, so it gives you one number to compare between offers.</p>
+    <p>Two loans can have the same monthly payment and very different APRs if one has fees and the other does not. That is why lenders in the United States must show you the APR before you sign.</p>
+
+    <h2>How to find your APR from your monthly payment</h2>
+    <p>Dealers sometimes talk only about the monthly payment. You can still work out the rate. A car loan payment follows this formula, where <em>L</em> is the amount financed, <em>r</em> is the monthly rate (APR divided by 12), and <em>n</em> is the number of months:</p>
+    <div class="formula" tabindex="0">payment = L × r ÷ (1 − (1 + r)<sup>−n</sup>)</div>
+    <p>You know the payment, the amount, and the term, so the unknown is <em>r</em>. There is no simple way to rearrange the formula for it, so the calculator tests rates until the payments repay the loan to the cent. For example, a $29,000 loan over 60 months with a $587 payment works out to about 7.9% APR and roughly $6,220 in interest.</p>
+
+    <h2>APR vs interest rate</h2>
+    <p>The interest rate sets how much interest builds up on your balance. APR starts from the same rate and adds fees that reduce the money you receive, such as a loan origination fee. With no fees the two are the same. With fees, the APR is higher, and the calculator shows both when you enter a fee amount.</p>
+
+    <h2>How to get a lower car loan APR</h2>
+    <ul>
+      <li>Check your credit report and fix errors before you apply.</li>
+      <li>Get a pre-approval from a credit union or bank before you visit the dealer, then ask the dealer to beat it.</li>
+      <li>Choose a shorter term when the payment fits your budget. Shorter loans usually carry lower rates.</li>
+      <li>Put more money down. A smaller loan relative to the car's value lowers the lender's risk.</li>
+      <li>Compare offers using APR for the same amount and term, not the monthly payment alone.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>What is APR on a car loan?</summary><p>APR is the yearly cost of borrowing, shown as a percentage. It includes the interest rate plus certain lender fees that are rolled into the loan, so it is usually the best number for comparing offers.</p></details>
+    <details><summary>How do I find my APR if I only know my monthly payment?</summary><p>Enter the amount financed, the term, and the payment into the calculator. It works backward to find the rate that makes your payments repay the loan exactly. If the lender took fees out of the loan, add them so the APR reflects the true cost.</p></details>
+    <details><summary>Is APR the same as the interest rate?</summary><p>Not always. The interest rate sets your monthly interest charge. APR also counts fees that reduce the money you actually receive, so APR is equal to or higher than the interest rate.</p></details>
+    <details><summary>What is a good APR for a car loan?</summary><p>It depends on your credit score, the loan term, whether the car is new or used, and current market rates. The most reliable way to judge an offer is to get quotes from a credit union, a bank, and the dealer, then compare their APRs for the same amount and term.</p></details>
+    <details><summary>Does a longer loan term mean a higher APR?</summary><p>Often, yes. Lenders usually charge higher rates on longer terms, and a longer term also means you pay interest for more months, so total interest rises even when the monthly payment drops.</p></details>
+    <details><summary>Will this match the APR on my loan paperwork?</summary><p>It should be very close. Lenders may treat an odd first payment date or certain add-ons differently, so the APR on your loan documents is the official figure.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. Your lender's disclosed APR is the official figure.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+function pv(M, r, n) {
+  if (r < 1e-12) return M * n;
+  return M * (1 - Math.pow(1 + r, -n)) / r;
+}
+// APR (percent) that makes n payments of M repay a net amount P.
+// Returns -1 when the payments are too low to repay P, Infinity when the rate is absurdly high.
+function solveAPR(P, M, n) {
+  if (!(P > 0) || !(M > 0) || !(n > 0)) return NaN;
+  if (M * n < P - 0.005) return -1;
+  if (M * n - P <= 0.005) return 0;
+  var lo = 0, hi = 1;
+  if (pv(M, hi, n) > P) return Infinity;
+  for (var i = 0; i < 200; i++) {
+    var mid = (lo + hi) / 2;
+    if (pv(M, mid, n) > P) lo = mid; else hi = mid;
+  }
+  return ((lo + hi) / 2) * 1200;
+}
+function monthlyPayment(L, aprPct, n) {
+  var r = aprPct / 1200;
+  if (r < 1e-12) return L / n;
+  return L * r / (1 - Math.pow(1 + r, -n));
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  var usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var pct = function (v) { return v.toFixed(2) + '%'; };
+  var mode = 'find';
+
+  function setMode(m) {
+    mode = m;
+    $('mode-find').setAttribute('aria-pressed', String(m === 'find'));
+    $('mode-pay').setAttribute('aria-pressed', String(m === 'pay'));
+    $('f-payment').hidden = m !== 'find';
+    $('f-fees').hidden = m !== 'find';
+    $('f-apr').hidden = m !== 'pay';
+    render();
+  }
+
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function render() {
+    var price = num('price'), down = num('down'), n = parseInt($('term').value, 10);
+    var L = price - down;
+    $('financed').textContent = usd0.format(Math.max(L, 0));
+
+    if (!(price > 0)) return showError('Enter the vehicle price to get started.');
+    if (!(L > 0)) return showError('The down payment covers the whole price, so there is nothing to finance.');
+
+    var M, apr, base, fees = 0, sub;
+    if (mode === 'find') {
+      M = num('payment');
+      fees = num('fees');
+      var P = L - fees;
+      if (!(M > 0)) return showError('Enter the monthly payment from your loan offer.');
+      if (!(P > 0)) return showError('The fees are as large as the loan amount. Check the fee figure.');
+      if (M * n < L - 0.005) return showError('That payment is too low to repay ' + usd0.format(L) + ' in ' + n + ' months, so no rate fits. Check the payment, the term, or the amount financed.');
+      apr = solveAPR(P, M, n);
+      base = solveAPR(L, M, n);
+      if (!isFinite(apr) || !isFinite(base) || apr > 100) return showError('These numbers imply an unrealistically high rate. Check the payment and the amount financed.');
+      $('resLabel').textContent = 'Your APR';
+      $('resBig').textContent = pct(apr);
+      sub = fees > 0
+        ? 'Interest rate on the loan amount is ' + pct(base) + '. The ' + usd0.format(fees) + ' in fees raises the APR.'
+        : 'Annual percentage rate on ' + usd0.format(L) + ' over ' + n + ' months.';
+    } else {
+      apr = num('apr');
+      if (apr < 0 || apr > 100) return showError('Enter an APR between 0% and 100%.');
+      base = apr;
+      M = monthlyPayment(L, apr, n);
+      $('resLabel').textContent = 'Your monthly payment';
+      $('resBig').textContent = usd2.format(M);
+      sub = 'Principal and interest on ' + usd0.format(L) + ' at ' + pct(apr) + ' APR for ' + n + ' months.';
+    }
+
+    var total = M * n, interest = Math.max(total - L, 0);
+    $('msg').hidden = true;
+    $('body').hidden = false;
+    $('resSub').textContent = sub;
+    $('sFinanced').textContent = usd0.format(L);
+    $('sInterest').textContent = usd0.format(interest);
+    $('sTotal').textContent = usd0.format(total);
+
+    var pShare = total > 0 ? (L / total) * 100 : 100;
+    $('barP').style.width = pShare + '%';
+    $('barC').style.width = (100 - pShare) + '%';
+    $('bar').setAttribute('aria-label', Math.round(pShare) + ' percent of your payments repay the loan and ' + Math.round(100 - pShare) + ' percent is interest');
+    $('legP').textContent = 'Loan ' + usd0.format(L);
+    $('legC').textContent = 'Interest ' + usd0.format(interest);
+
+    var tbody = $('rows');
+    tbody.textContent = '';
+    [-2, -1, 0, 1, 2].forEach(function (d) {
+      var rate = base + d;
+      if (rate < 0) return;
+      var pay = monthlyPayment(L, rate, n);
+      var tr = document.createElement('tr');
+      if (d === 0) tr.className = 'now';
+      [pct(rate) + (d === 0 ? ' (yours)' : ''), usd2.format(pay), usd0.format(Math.max(pay * n - L, 0))].forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  $('mode-find').addEventListener('click', function () { setMode('find'); });
+  $('mode-pay').addEventListener('click', function () { setMode('pay'); });
+  ['price', 'down', 'payment', 'apr', 'fees'].forEach(function (id) { $(id).addEventListener('input', render); });
+  $('term').addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

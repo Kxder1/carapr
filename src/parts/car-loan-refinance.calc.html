@@ -1,0 +1,73 @@
+  <section class="calc" aria-label="Car loan refinance calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="field">
+        <label for="bal">Loan balance today</label>
+        <div class="control has-pre"><span class="pre" data-cur>$</span><input id="bal" type="number" inputmode="decimal" min="0" step="any"></div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr0" id="apr0Label">Current rate</label>
+          <div class="control has-suf"><input id="apr0" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n0">Months left now</label>
+          <div class="control"><input id="n0" type="number" inputmode="numeric" min="1" max="120" step="1"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr1" id="apr1Label">New rate</label>
+          <div class="control has-suf"><input id="apr1" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n1">New loan term</label>
+          <div class="control"><select id="n1"></select></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="fees">New loan fees (optional)</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="fees" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint" id="feesHint">Application, title transfer, or arrangement fees.</p>
+        </div>
+        <div class="field">
+          <label for="fee">Early repayment fee on your current loan</label>
+          <div class="control has-suf"><input id="fee" type="number" inputmode="decimal" min="0" max="10" step="0.1"><span class="suf">%</span></div>
+          <p class="hint" id="feeHint">Percent of the balance your current lender charges to settle early.</p>
+        </div>
+      </div>
+
+      <div class="financed"><span>Current monthly payment</span><strong id="pay0" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow" id="resLabel">You would save</p>
+          <p class="big" id="resBig" translate="no">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Current payment</span><b id="sPay0" translate="no">0</b></div>
+          <div class="stat"><span>New payment</span><b id="sPay1" translate="no">0</b></div>
+          <div class="stat"><span>Costs paid back in</span><b id="sBreak">-</b></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Current loan and new loan</h2>
+          <table>
+            <thead><tr><th scope="col">Compare</th><th scope="col">Current loan</th><th scope="col">New loan</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

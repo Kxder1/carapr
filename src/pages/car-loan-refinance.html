@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Car Loan Refinance Calculator: See If You Would Save</title>
+<meta name="description" content="Free car loan refinance calculator. Compare your current loan to a new rate and term to see your new payment, total savings, and how long it takes to break even on fees.">
+<link rel="canonical" href="https://carapr.org/car-loan-refinance.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html" aria-current="page"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Would refinancing your car loan save money?</h1>
+    <p class="lede">Enter your current loan and the offer you are considering. The calculator compares the payments, the total cost, and how long it takes to make back any fees.</p>
+  </section>
+
+  <section class="calc" aria-label="Car loan refinance calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="field">
+        <label for="bal">Loan balance today</label>
+        <div class="control has-pre"><span class="pre">$</span><input id="bal" type="number" inputmode="decimal" min="0" step="100" value="22000"></div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr0">Current APR</label>
+          <div class="control has-suf"><input id="apr0" type="number" inputmode="decimal" min="0" step="0.1" value="9.5"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n0">Months left now</label>
+          <div class="control"><input id="n0" type="number" inputmode="numeric" min="1" max="120" step="1" value="48"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr1">New APR</label>
+          <div class="control has-suf"><input id="apr1" type="number" inputmode="decimal" min="0" step="0.1" value="6.5"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n1">New loan term</label>
+          <div class="control">
+            <select id="n1">
+              <option value="24">24 months</option>
+              <option value="36">36 months</option>
+              <option value="48" selected>48 months</option>
+              <option value="60">60 months</option>
+              <option value="72">72 months</option>
+              <option value="84">84 months</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="fees">Refinance fees (optional)</label>
+        <div class="control has-pre"><span class="pre">$</span><input id="fees" type="number" inputmode="decimal" min="0" step="25" value="100"></div>
+        <p class="hint">Title transfer, application, or lender fees paid up front. Example amount.</p>
+      </div>
+
+      <div class="financed"><span>Current monthly payment</span><strong id="pay0">$0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow" id="resLabel">You would save</p>
+          <p class="big" id="resBig">$0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Current payment</span><b id="sPay0">$0</b></div>
+          <div class="stat"><span>New payment</span><b id="sPay1">$0</b></div>
+          <div class="stat"><span>Fees paid back in</span><b id="sBreak">-</b></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Current loan and new loan</h2>
+          <table>
+            <thead><tr><th scope="col">Compare</th><th scope="col">Current loan</th><th scope="col">New loan</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>When refinancing a car loan makes sense</h2>
+    <p>Refinancing replaces your current loan with a new one, ideally at a lower rate. It tends to help when your credit score has improved since you bought the car, when market rates have fallen, or when the dealer arranged a loan at a higher rate than you could have gotten elsewhere.</p>
+
+    <h2>How this calculator works</h2>
+    <p>It finds your current payment from your balance, rate, and months left. It then finds the new payment from the same balance at the new rate and term. Total savings is what you would still pay on the current loan, minus what you would pay on the new one plus any fees. A positive result means refinancing costs less overall.</p>
+
+    <h2>Watch out for a longer term</h2>
+    <p>A longer term can lower your monthly payment and still cost more in total, because you pay interest for more months. If the calculator shows a lower payment but a negative savings figure, that is what is happening. Try a new term close to your months left to compare fairly.</p>
+
+    <h2>How to compare refinance offers</h2>
+    <ul>
+      <li>Get quotes from a credit union, a bank, and an online lender.</li>
+      <li>Compare the APR, not just the interest rate or the payment. The <a href="index.html">car APR calculator</a> finds the APR for any offer.</li>
+      <li>Ask about fees, and whether the lender charges for paying off the old loan early.</li>
+      <li>Check that you would not end up owing more than the car is worth. The <a href="negative-equity.html">negative equity calculator</a> shows where you stand.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>When is a good time to refinance a car loan?</summary><p>Usually after your credit has improved, after rates have dropped, or early in the loan while the balance is still large. The longer you have owned the loan, the less interest is left to save.</p></details>
+    <details><summary>Does refinancing hurt my credit?</summary><p>The new lender will check your credit, which can cause a small, temporary dip. Over time, steady on-time payments on the new loan matter more.</p></details>
+    <details><summary>Can I refinance if I owe more than the car is worth?</summary><p>It can be harder. Many lenders limit how much they will lend compared to the car's value. Paying the balance down first can help.</p></details>
+    <details><summary>What are break-even months?</summary><p>It is how many months of lower payments it takes to make back the fees you paid to refinance. If you plan to sell the car before then, refinancing may not be worth it.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. A lender's written offer is the official figure.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+function monthlyPayment(L, aprPct, n) {
+  var r = aprPct / 1200;
+  if (r < 1e-12) return L / n;
+  return L * r / (1 - Math.pow(1 + r, -n));
+}
+// Compare staying in the current loan with a new loan on the same balance.
+function compareLoans(B, apr0, n0, apr1, n1, fees) {
+  var M0 = monthlyPayment(B, apr0, n0), M1 = monthlyPayment(B, apr1, n1);
+  var tot0 = M0 * n0, tot1 = M1 * n1;
+  var monthly = M0 - M1;
+  var breakEven = null;
+  if (monthly > 0.005) breakEven = fees > 0 ? Math.ceil(fees / monthly) : 0;
+  return { M0: M0, M1: M1, tot0: tot0, tot1: tot1, int0: tot0 - B, int1: tot1 - B, savings: tot0 - (tot1 + fees), monthly: monthly, breakEven: breakEven };
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  var usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var pct = function (v) { return v.toFixed(2) + '%'; };
+
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function render() {
+    var B = num('bal'), apr0 = num('apr0'), n0 = Math.round(num('n0')), apr1 = num('apr1'), n1 = parseInt($('n1').value, 10), fees = num('fees');
+    $('pay0').textContent = '$0';
+    if (!(B > 0)) return showError('Enter your loan balance to get started.');
+    if (!(n0 >= 1) || n0 > 120) return showError('Enter the months left on your current loan, from 1 to 120.');
+    if (apr0 < 0 || apr0 > 100 || apr1 < 0 || apr1 > 100) return showError('Enter APRs between 0% and 100%.');
+    if (fees < 0) return showError('Fees cannot be negative.');
+
+    var c = compareLoans(B, apr0, n0, apr1, n1, fees);
+    $('pay0').textContent = usd2.format(c.M0);
+    $('msg').hidden = true;
+    $('body').hidden = false;
+
+    var saves = c.savings > 0;
+    $('resLabel').textContent = saves ? 'You would save' : 'It would cost you more';
+    $('resBig').textContent = usd0.format(Math.abs(c.savings));
+    $('resBig').style.color = saves ? '' : 'var(--warm)';
+
+    var diff = usd2.format(Math.abs(c.monthly));
+    if (saves && c.monthly >= 0) $('resSub').textContent = 'The lower rate cuts your payment by ' + diff + ' a month and lowers your total cost.';
+    else if (saves) $('resSub').textContent = 'Your payment rises by ' + diff + ' a month, but the shorter loan costs less in total.';
+    else if (c.monthly > 0) $('resSub').textContent = 'Your payment drops by ' + diff + ' a month, but you would pay more in total over the longer term and fees.';
+    else $('resSub').textContent = 'The new loan has a higher payment and costs more overall. Check the rate, term, and fees.';
+
+    $('sPay0').textContent = usd2.format(c.M0);
+    $('sPay1').textContent = usd2.format(c.M1);
+    $('sBreak').textContent = c.breakEven === null ? 'No monthly savings' : (c.breakEven === 0 ? 'Right away' : c.breakEven + (c.breakEven === 1 ? ' month' : ' months'));
+
+    var data = [
+      ['Interest rate (APR)', pct(apr0), pct(apr1)],
+      ['Monthly payment', usd2.format(c.M0), usd2.format(c.M1)],
+      ['Months left', String(n0), String(n1)],
+      ['Total interest', usd0.format(c.int0), usd0.format(c.int1)],
+      ['Fees', '$0', usd0.format(fees)],
+      ['Total you pay', usd0.format(c.tot0), usd0.format(c.tot1 + fees)]
+    ];
+    var tbody = $('rows');
+    tbody.textContent = '';
+    data.forEach(function (row, i) {
+      var tr = document.createElement('tr');
+      if (i === data.length - 1) tr.className = 'now';
+      row.forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['bal', 'apr0', 'n0', 'apr1', 'fees'].forEach(function (id) { $(id).addEventListener('input', render); });
+  $('n1').addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>

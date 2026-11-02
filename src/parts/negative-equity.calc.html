@@ -1,0 +1,85 @@
+  <section class="calc" aria-label="Car negative equity calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="bal">Loan balance today</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="bal" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">The settlement or payoff amount from your lender.</p>
+        </div>
+        <div class="field">
+          <label for="value">Car value today</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="value" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Check a used car price guide or dealer offers.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr" id="aprLabel">Loan rate</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n">Months left on the loan</label>
+          <div class="control"><input id="n" type="number" inputmode="numeric" min="1" max="120" step="1"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="balloon" id="balloonLabel">Final balloon payment (optional)</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="balloon" type="number" inputmode="decimal" min="0" step="any" value="0"></div>
+          <p class="hint" id="balloonHint">Leave at 0 if your loan has no large final payment.</p>
+        </div>
+        <div class="field">
+          <label for="dep">Value the car loses each year</label>
+          <div class="control has-suf"><input id="dep" type="number" inputmode="decimal" min="0" max="90" step="1"><span class="suf">%</span></div>
+          <p class="hint">An estimate. It varies by make, model, and mileage.</p>
+        </div>
+      </div>
+
+      <div class="row" id="f-uk" hidden>
+        <div class="field">
+          <label for="tap">Total amount payable on your agreement</label>
+          <div class="control has-pre"><span class="pre" data-cur>£</span><input id="tap" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Shown on your credit agreement. Includes interest, fees and the final payment.</p>
+        </div>
+        <div class="field">
+          <label for="paid">Paid so far, including deposit</label>
+          <div class="control has-pre"><span class="pre" data-cur>£</span><input id="paid" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </div>
+
+      <div class="financed"><span>Regular monthly payment</span><strong id="pay" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Your equity today</p>
+          <p class="big" id="resBig" translate="no">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <p class="callout" id="ukBox" hidden></p>
+
+        <div class="stats">
+          <div class="stat"><span>Car value</span><b id="sVal" translate="no">0</b></div>
+          <div class="stat"><span>Loan balance</span><b id="sBal" translate="no">0</b></div>
+          <div class="stat"><span>Break-even</span><b id="sBreak">-</b></div>
+          <div class="stat"><span>Added to next loan if you trade in now</span><b id="sRoll" translate="no">0</b></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Value and balance over time</h2>
+          <table>
+            <thead><tr><th scope="col">When</th><th scope="col">Car value</th><th scope="col">Loan balance</th><th scope="col">Equity</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

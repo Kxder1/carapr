@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7J51V8CMC3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-7J51V8CMC3');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Negative Equity Car Calculator: Do You Owe More Than It's Worth</title>
+<meta name="description" content="Free negative equity calculator for car loans. Compare your loan balance to your car's value, see what a trade-in would add to your next loan, and when you reach break-even.">
+<link rel="canonical" href="https://carapr.org/negative-equity.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout concept: one calculator card split into inputs (left) and a results panel (right), with a plain reading column underneath for search content. */
+:root {
+  --bg: #F1F4F3;
+  --surface: #FFFFFF;
+  --panel: #E9EEEC;
+  --ink: #14201B;
+  --muted: #55645E;
+  --line: #D3DBD8;
+  --accent: #0B6B5D;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(11, 107, 93, 0.10);
+  --warm: #C2410C;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0E1613;
+    --surface: #15201C;
+    --panel: #1B2823;
+    --ink: #E5EEEA;
+    --muted: #93A59D;
+    --line: #2A3B35;
+    --accent: #3FC4A8;
+    --accent-ink: #052019;
+    --accent-soft: rgba(63, 196, 168, 0.14);
+    --warm: #F59E6B;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1rem/1.6 var(--body);
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; }
+
+/* Header */
+.site { border-bottom: 1px solid var(--line); }
+.site .wrap { display: flex; align-items: center; gap: 10px; padding-block: 16px; }
+.brand { font: 800 1.05rem/1 var(--display); letter-spacing: -0.01em; }
+
+/* Hero */
+.hero { padding-block: 40px 28px; }
+h1 {
+  margin: 0 0 12px;
+  font: 800 clamp(2rem, 5.2vw, 3.4rem)/1.04 var(--display);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+.lede { margin: 0; color: var(--muted); max-width: 58ch; font-size: 1.05rem; }
+
+/* Calculator */
+.calc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.inputs { padding: 24px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.results { padding: 24px; background: var(--panel); border-left: 1px solid var(--line); min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+#body { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+.seg { display: inline-flex; align-self: flex-start; max-width: 100%; background: var(--panel); border-radius: 10px; padding: 4px; gap: 2px; }
+.seg button {
+  font: 600 0.9rem/1 var(--body);
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  padding: 11px 14px;
+  min-height: 42px;
+  cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14); }
+.seg button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.note { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field label { font-weight: 600; font-size: 0.92rem; }
+.hint { color: var(--muted); font-size: 0.8rem; margin: 0; }
+.control { position: relative; }
+.control input, .control select {
+  width: 100%;
+  font: 500 1rem/1.2 var(--body);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 46px;
+}
+.control .pre { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.control .suf { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.control.has-pre input { padding-left: 26px; }
+.control.has-suf input { padding-right: 28px; }
+.financed { display: flex; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 0.95rem; }
+.financed strong { font-variant-numeric: tabular-nums; }
+
+/* Results */
+.eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.big { margin: 0; font: 800 clamp(3.2rem, 9vw, 4.8rem)/0.95 var(--display); letter-spacing: -0.03em; color: var(--accent); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.sub { margin: 10px 0 0; color: var(--muted); font-size: 0.92rem; max-width: 46ch; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; }
+.stat { border-top: 1px solid var(--line); padding-top: 10px; min-width: 0; }
+.stat span { display: block; font-size: 0.8rem; color: var(--muted); }
+.stat b { display: block; font: 600 1.2rem/1.3 var(--body); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--line); }
+.bar i { display: block; height: 100%; }
+.bar .p { background: var(--accent); }
+.bar .c { background: var(--warm); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 8px; font-size: 0.82rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; background: var(--accent); }
+.legend span.c::before { background: var(--warm); }
+
+.tablewrap { overflow-x: auto; }
+.tablewrap h2 { font: 600 0.95rem/1.3 var(--body); margin: 0 0 8px; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.92rem; }
+th { text-align: right; font-weight: 600; font-size: 0.78rem; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--line); }
+td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+tr.now td { background: var(--accent-soft); font-weight: 600; }
+.msg { margin: 0; padding: 16px; border-radius: 10px; background: var(--surface); border: 1px solid var(--warm); }
+
+/* Ads */
+.ad { margin-block: 36px; min-height: 100px; text-align: center; }
+.ad::before { content: "Advertisement"; display: block; margin-bottom: 6px; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Reading column */
+.read { max-width: 68ch; padding-bottom: 24px; }
+.read h2 { font: 700 clamp(1.45rem, 3.2vw, 1.9rem)/1.15 var(--display); letter-spacing: -0.015em; margin: 44px 0 12px; text-wrap: balance; }
+.read p, .read li { color: var(--ink); }
+.read ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 6px; }
+.formula { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font: 500 0.95rem/1.7 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+details { border-bottom: 1px solid var(--line); }
+details:first-of-type { border-top: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 600; padding: 14px 0; list-style-position: outside; }
+details p { margin: 0 0 14px; color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); margin-top: 24px; }
+footer .wrap { padding-block: 24px 40px; display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; color: var(--muted); font-size: 0.85rem; }
+footer p { margin: 0; max-width: 62ch; }
+footer nav { display: flex; gap: 18px; }
+footer a { color: var(--ink); }
+
+@media (max-width: 780px) {
+  .calc { grid-template-columns: minmax(0, 1fr); }
+  .results { border-left: 0; border-top: 1px solid var(--line); }
+  .inputs, .results { padding: 20px 16px; }
+}
+
+/* Third bar segment and legend swatch */
+.bar .m { background: var(--muted); }
+.legend span.m::before { background: var(--muted); }
+
+/* Calculators dropdown */
+.site .wrap { position: relative; }
+.menu { margin-left: auto; position: relative; }
+.menu-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 600 0.92rem/1 var(--body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; min-height: 42px; cursor: pointer;
+}
+.menu-btn svg { transition: transform 0.15s; }
+.menu-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.menu-btn:focus-visible, .menu-list a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.menu-list {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 20;
+  width: min(300px, calc(100vw - 32px));
+  margin: 0; padding: 6px; list-style: none;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+.menu-list a { display: block; padding: 10px 12px; border-radius: 8px; color: var(--ink); text-decoration: none; }
+.menu-list a b { display: block; font-weight: 600; font-size: 0.95rem; }
+.menu-list a span { display: block; color: var(--muted); font-size: 0.8rem; }
+.menu-list a:hover { background: var(--accent-soft); }
+.menu-list a[aria-current="page"] { background: var(--accent-soft); }
+.menu-list a[aria-current="page"] b::after { content: " (you are here)"; font-weight: 400; color: var(--muted); font-size: 0.8rem; }
+
+footer .more { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+footer .more strong { color: var(--ink); font-weight: 600; }
+
+.brand { color: var(--ink); text-decoration: none; }
+.brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Country picker */
+.site .wrap { flex-wrap: wrap; }
+.country { margin-left: auto; display: flex; align-items: center; min-width: 0; }
+.menu { margin-left: 0; }
+.country select {
+  font: 600 0.9rem/1.2 var(--body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 10px; min-height: 42px; max-width: 15rem; cursor: pointer;
+}
+.country select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+@media (max-width: 560px) {
+  .site .wrap > .brand { flex: 1 0 calc(100% - 40px); }
+  .country { margin-left: 0; flex: 1 1 0; }
+  .country select { max-width: 100%; width: 100%; }
+}
+
+/* Country rules panel */
+.rules { margin-top: 20px; padding: 16px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; display: flex; flex-direction: column; gap: 8px; }
+.rules h2 { margin: 0; font: 600 1rem/1.3 var(--body); }
+.rules p, .rules ul { margin: 0; color: var(--ink); font-size: 0.93rem; max-width: 80ch; }
+.rules ul { padding-left: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
+.rules .src { color: var(--muted); font-size: 0.8rem; }
+.rules a { color: var(--accent); }
+
+/* Checkbox rows and small inline results */
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; }
+.check input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--accent); flex: none; }
+.callout { padding: 12px 14px; border-radius: 10px; background: var(--accent-soft); font-size: 0.92rem; }
+.callout b { font-variant-numeric: tabular-nums; }
+.hint a { color: var(--accent); }
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is it bad to trade in a car with negative equity?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It usually means a larger next loan, since the gap is rolled into it. That makes the new loan more likely to be underwater too. Waiting until break-even, or paying the gap in cash, avoids that."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I find my car's value?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Use a used car pricing guide such as Kelley Blue Book or Edmunds, and compare with offers from dealers or online car buyers. Use the trade-in value if you plan to trade it in."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I find my loan balance?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Ask your lender for the payoff amount, or check your online account. The payoff amount can be a little higher than the balance on your statement because of interest that builds up between payments."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is GAP insurance?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Guaranteed asset protection, or GAP, coverage pays the difference between the car's value and your loan balance if the car is totaled or stolen. It is optional and costs extra, so compare prices from your insurer and the dealer."
+   }
+  }
+ ]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "WebApplication",
+ "name": "Do you owe more than your car is worth?",
+ "url": "https://carapr.org/negative-equity.html",
+ "description": "Free negative equity calculator for car loans. Compare your loan balance to your car's value, see what a trade-in would add to your next loan, and when you reach break-even.",
+ "applicationCategory": "FinanceApplication",
+ "operatingSystem": "Any",
+ "isAccessibleForFree": true,
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "USD"
+ }
+}
+</script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+<div class="country" translate="no">
+      <label class="sr" for="country">Country and currency</label>
+      <select id="country" aria-label="Country and currency"><option value="US">United States · USD</option></select>
+    </div>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html" aria-current="page"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Do you owe more than your car is worth?</h1>
+    <p class="lede">Enter what you owe and what the car is worth. The calculator shows your equity today, what a trade-in would add to your next loan, and when the loan balance drops below the car's value.</p>
+  </section>
+
+  <section class="calc" aria-label="Car negative equity calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="bal">Loan balance today</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="bal" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">The settlement or payoff amount from your lender.</p>
+        </div>
+        <div class="field">
+          <label for="value">Car value today</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="value" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Check a used car price guide or dealer offers.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr" id="aprLabel">Loan rate</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n">Months left on the loan</label>
+          <div class="control"><input id="n" type="number" inputmode="numeric" min="1" max="120" step="1"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="balloon" id="balloonLabel">Final balloon payment (optional)</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="balloon" type="number" inputmode="decimal" min="0" step="any" value="0"></div>
+          <p class="hint" id="balloonHint">Leave at 0 if your loan has no large final payment.</p>
+        </div>
+        <div class="field">
+          <label for="dep">Value the car loses each year</label>
+          <div class="control has-suf"><input id="dep" type="number" inputmode="decimal" min="0" max="90" step="1"><span class="suf">%</span></div>
+          <p class="hint">An estimate. It varies by make, model, and mileage.</p>
+        </div>
+      </div>
+
+      <div class="row" id="f-uk" hidden>
+        <div class="field">
+          <label for="tap">Total amount payable on your agreement</label>
+          <div class="control has-pre"><span class="pre" data-cur>£</span><input id="tap" type="number" inputmode="decimal" min="0" step="any"></div>
+          <p class="hint">Shown on your credit agreement. Includes interest, fees and the final payment.</p>
+        </div>
+        <div class="field">
+          <label for="paid">Paid so far, including deposit</label>
+          <div class="control has-pre"><span class="pre" data-cur>£</span><input id="paid" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </div>
+
+      <div class="financed"><span>Regular monthly payment</span><strong id="pay" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Your equity today</p>
+          <p class="big" id="resBig" translate="no">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <p class="callout" id="ukBox" hidden></p>
+
+        <div class="stats">
+          <div class="stat"><span>Car value</span><b id="sVal" translate="no">0</b></div>
+          <div class="stat"><span>Loan balance</span><b id="sBal" translate="no">0</b></div>
+          <div class="stat"><span>Break-even</span><b id="sBreak">-</b></div>
+          <div class="stat"><span>Added to next loan if you trade in now</span><b id="sRoll" translate="no">0</b></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Value and balance over time</h2>
+          <table>
+            <thead><tr><th scope="col">When</th><th scope="col">Car value</th><th scope="col">Loan balance</th><th scope="col">Equity</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>
+
+  <article class="read">
+    <h2>What negative equity means</h2>
+    <p>Equity is the car's value minus what you owe on it. If you owe more than the car is worth, your equity is negative. People also call this being underwater or upside down on the loan.</p>
+
+    <h2>Why it happens</h2>
+    <ul>
+      <li>New cars lose value fastest in the first year, often faster than the loan balance falls.</li>
+      <li>A small down payment or a long loan term keeps the balance high for longer.</li>
+      <li>Rolling an old loan's balance into a new loan starts you underwater on day one.</li>
+    </ul>
+
+    <h2>How this calculator works</h2>
+    <p>It finds your regular payment from the balance, APR, and months left, then tracks the loan balance month by month. The car's value falls by the yearly percentage you enter. Break-even is the first month when the car's value is at least the loan balance. The value is an estimate, so treat the result as a guide and check your car's real value with a pricing guide or dealer offers.</p>
+
+    <h2>What to do if you are underwater</h2>
+    <ul>
+      <li>Keep making payments. The balance falls every month while the value falls more slowly as the car ages.</li>
+      <li>Pay extra toward the principal. The <a href="pay-off-car-loan-early.html">pay off early calculator</a> shows how much that speeds up break-even.</li>
+      <li>Avoid trading in until you reach break-even. A trade-in with negative equity adds the gap to your next loan.</li>
+      <li>Ask whether GAP coverage makes sense. It can cover the difference between what you owe and what insurance pays if the car is totaled.</li>
+      <li>Look at a lower rate with the <a href="car-loan-refinance.html">refinance calculator</a>, though lenders may limit loans on cars worth less than the balance.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>Is it bad to trade in a car with negative equity?</summary><p>It usually means a larger next loan, since the gap is rolled into it. That makes the new loan more likely to be underwater too. Waiting until break-even, or paying the gap in cash, avoids that.</p></details>
+    <details><summary>How do I find my car's value?</summary><p>Use a used car pricing guide such as Kelley Blue Book or Edmunds, and compare with offers from dealers or online car buyers. Use the trade-in value if you plan to trade it in.</p></details>
+    <details><summary>How do I find my loan balance?</summary><p>Ask your lender for the payoff amount, or check your online account. The payoff amount can be a little higher than the balance on your statement because of interest that builds up between payments.</p></details>
+    <details><summary>What is GAP insurance?</summary><p>Guaranteed asset protection, or GAP, coverage pays the difference between the car's value and your loan balance if the car is totaled or stolen. It is optional and costs extra, so compare prices from your insurer and the dealer.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. A pricing guide or dealer offer gives the real value of your car.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+    <nav class="more" aria-label="By country">
+      <strong>By country</strong>
+      <a href="index.html">United States</a>
+      <a href="uk-car-finance-apr-calculator.html">UK</a>
+      <a href="canada-car-loan-calculator.html">Canada</a>
+      <a href="india-car-loan-emi-calculator.html">India</a>
+      <a href="nigeria-car-loan-calculator.html">Nigeria</a>
+      <a href="autokredit-rechner.html">Deutschland</a>
+      <a href="simulateur-credit-auto-taeg.html">France</a>
+      <a href="simulador-financiamento-veiculos.html">Brasil</a>
+      <a href="calculadora-credito-automotriz.html">México</a>
+      <a href="japan-car-loan-calculator.html">日本</a>
+      <a href="korea-car-loan-calculator.html">한국</a>
+      <a href="china-car-loan-calculator.html">中国</a>
+      <a href="europe-car-loan-apr-calculator.html">Europe</a>
+    </nav>
+  </div>
+</footer>
+<script>
+// Calculators dropdown: opens on click, closes on outside click, Escape, or choosing a link.
+(function () {
+  var btn = document.getElementById('menuBtn');
+  var list = document.getElementById('menuList');
+  if (!btn || !list) return;
+
+  function setOpen(open, returnFocus) {
+    btn.setAttribute('aria-expanded', String(open));
+    list.hidden = !open;
+    if (!open && returnFocus) btn.focus();
+  }
+
+  btn.addEventListener('click', function () {
+    setOpen(list.hidden);
+  });
+  document.addEventListener('click', function (e) {
+    if (!list.hidden && !btn.contains(e.target) && !list.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !list.hidden) setOpen(false, true);
+  });
+  list.addEventListener('focusout', function (e) {
+    if (!list.hidden && e.relatedTarget && !list.contains(e.relatedTarget) && e.relatedTarget !== btn) setOpen(false);
+  });
+})();
+</script>
+
+<script>
+// Country rules and example figures. Checked October 2026; sources listed per country.
+// rate.method: "nominal" = monthly rate x 12 (US Reg Z style); "effective" = (1 + monthly)^12 - 1 (EU APRC style).
+// rate.input: "year" or "month" = how people in that country type a quoted rate.
+// prepay.kind: "none" = no charge allowed or usual; "eu" = capped at 1% (0.5% with 12 months or less left) and at interest saved;
+//              "pct" = lenders usually charge about prepay.pct percent of the amount repaid early.
+// mileage.kind: "flat" | "tiered" | "fr" (French barème formula) | "none" (actual expenses only).
+window.CAR_DATA = {
+  _order: ["US", "CN", "JP", "IN", "DE", "FR", "BR", "GB", "CA", "KR", "MX", "NG", "EU"],
+
+  US: {
+    code: "US", name: "United States", cur: "USD", loc: "en-US",
+    terms: [24, 36, 48, 60, 72, 84, 96],
+    ex: { price: 48000, rate: 7, term: 72, downPct: 0.12, apy: 3.8, dep: 15, earn: 700, hours: 25, dist: 400, econ: 28, fuel: 3.1, wear: 0.1 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "", inputLabel: "APR", inputHint: "From a lender quote or offer.",
+      desc: "Annual percentage rate as US law defines it: the monthly rate times 12, including lender fees.",
+      rule: "Lenders must disclose the APR before you sign (Truth in Lending Act, Regulation Z). It is the monthly rate times 12 and includes interest and lender fees such as origination fees, but not government title and registration fees." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment", hint: "A large last payment. Uncommon on US car loans; leave at 0 if your loan has none.", rule: "" },
+    fee: { label: "Lender fees taken from the loan", hint: "Origination or processing fees that reduce the money you receive." },
+    prepay: { kind: "none", pct: 0, capInterest: false, free: 0,
+      rule: "There is no federal cap on prepayment penalties; state law decides, and most simple-interest car loans have none. The Rule of 78s, which front-loads interest, is banned on precomputed loans longer than 61 months." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Savings interest is taxed as ordinary income at your federal rate (10% to 37%) plus any state tax. Enter your own rate to see the after-tax result." },
+    dist: { unit: "mi", econ: "mpg", fuel: "gal" },
+    mileage: { kind: "flat", rate: 0.725, rule: "Self-employed drivers can deduct the IRS standard mileage rate: 72.5 cents per business mile for 2026. It replaces actual car expenses such as gas and repairs." },
+    extra: { neg: [], refi: [] },
+    src: { all: [["CFPB Regulation Z", "https://www.consumerfinance.gov/rules-policy/regulations/1026/"]],
+      payoff: [["15 USC 1615 (Rule of 78s)", "https://www.law.cornell.edu/uscode/text/15/1615"]],
+      gig: [["IRS 2026 mileage rate", "https://www.irs.gov/newsroom/irs-sets-2026-business-standard-mileage-rate-at-725-cents-per-mile-up-25-cents"]],
+      save: [["IRS Topic 403", "https://www.irs.gov/taxtopics/tc403"]] }
+  },
+
+  CN: {
+    code: "CN", name: "China", cur: "CNY", loc: "zh-CN",
+    terms: [12, 24, 36, 48, 60],
+    ex: { price: 180000, rate: 3.5, term: 36, downPct: 0.2, apy: 1, dep: 18, earn: 2500, hours: 40, dist: 900, econ: 7, fuel: 7.49, wear: 0.3 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "年化利率", inputLabel: "Interest rate (年利率, % a year)", inputHint: "If the dealer quoted 0% plus a handling fee (手续费), enter the fee below.",
+      desc: "Annualized rate (年化利率) on the money you actually owe, the way Chinese regulators require lenders to state it.",
+      rule: "Since 2021 every loan must show its annualized rate (年化利率) on the balance actually owed, including fees. From 1 August 2026 lenders, including auto finance companies, must also show the total annualized financing cost (综合融资成本), and a daily or monthly rate cannot replace it." },
+    flat: true, flatRule: "Dealer and captive finance deals often advertise 0% interest plus a handling fee (手续费), or a monthly fee rate (月费率) on the full amount. That works like a flat rate, so the real annualized cost is roughly double the fee rate, and the 2026 rules require lenders to say so. Enter the fee in the fees box, or choose “Flat rate”, to see the true rate.",
+    vat: 0,
+    balloon: { label: "Final balloon payment (弹性尾款)", hint: "Some brands offer “flexible tail payment” plans with a large last payment. Leave at 0 if yours has none.", rule: "Balloon plans (弹性尾款) exist from some brand finance companies, but most Chinese car loans are short, level-payment loans." },
+    fee: { label: "Handling fee (手续费)", hint: "Fees paid to the dealer or lender for the loan. Common on “0% interest” deals." },
+    prepay: { kind: "pct", pct: 2, capInterest: false, free: 0,
+      rule: "There is no national rule on early repayment. Lenders commonly charge 1% to 3% of the remaining principal, or keep the handling fee or subsidy; some waive it after 12 months. The example uses 2%." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Interest on savings deposits has been exempt from individual income tax since October 2008." },
+    dist: { unit: "km", econ: "L100", fuel: "L" },
+    mileage: { kind: "none", rule: "There is no standard per-kilometre deduction for ride-hailing or delivery drivers; platforms and local tax offices handle tax differently. Use your actual costs." },
+    extra: { apr: ["Since 2024 lenders set the maximum loan-to-value for private cars themselves, up to 100%, so a down payment is no longer legally required."] },
+    src: { all: [["PBOC 2021 annualized rate notice", "https://cs.com.cn/xwzx/hg/202103/t20210331_6152650.html"], ["2026 financing cost disclosure rule", "https://www.news.cn/money/20260316/7e74272f10864c3baa87a5751669b6d9/c.html"]], save: [["财税〔2008〕132号", "https://fgk.chinatax.gov.cn/zcfgk/c100012/c5193346/content.html"]] }
+  },
+
+  JP: {
+    code: "JP", name: "Japan", cur: "JPY", loc: "ja-JP",
+    terms: [12, 24, 36, 48, 60, 72, 84, 96, 120],
+    ex: { price: 3000000, rate: 3.9, term: 60, downPct: 0.1, apy: 0.4, dep: 15, earn: 50000, hours: 25, dist: 650, econ: 15, fuel: 170, wear: 8 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "実質年率", inputLabel: "Interest rate (実質年率, % a year)", inputHint: "Dealer loans show this as 実質年率.",
+      desc: "Real annual rate (実質年率) on the declining balance: the monthly rate times 12, the way Japanese installment loans state it.",
+      rule: "Under the Installment Sales Act (割賦販売法), dealer car loans must show the real annual rate (実質年率), calculated on the declining balance. Bank auto loans are usually cheaper than dealer loans." },
+    flat: false, vat: 0,
+    balloon: { label: "Residual value (残価)", hint: "Residual-value loans (残価設定ローン) set a final payment you can pay, refinance, or settle by returning the car.", rule: "Residual-value loans (残価設定ローン) are common. You pay down only part of the price, then pay the residual, refinance it, or hand the car back at the end. Bonus-month payments (ボーナス払い) are also common; this calculator assumes equal monthly payments." },
+    fee: { label: "Loan fees", hint: "Any fees paid to take out the loan." },
+    prepay: { kind: "none", pct: 0, capInterest: false, free: 0,
+      rule: "Most Japanese car loans let you repay early free or for a small flat handling fee (繰上げ返済手数料). For example, MUFG’s car loan is free online and ¥5,500 at a branch." },
+    save: { tax: 20.315, allowance: 0, kind: "interest",
+      rule: "Deposit interest is taxed at 20.315% (15.315% national including the reconstruction surtax, plus 5% local), withheld by the bank automatically." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "Japan has no standard per-kilometre deduction. Self-employed drivers deduct the business share of actual car costs (家事按分)." },
+    extra: {},
+    src: { all: [["Japan FSA: 実質年率 explained", "https://www.shiruporuto.jp/public/knowledge/loan/rich/edu/pdf/rich_e05.pdf"]], payoff: [["MUFG car loan repayment", "https://www.bk.mufg.jp/kariru/mycar/hensai/index.html"]], save: [["National Tax Agency", "https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1310.htm"]] }
+  },
+
+  IN: {
+    code: "IN", name: "India", cur: "INR", loc: "en-IN", payLabel: "EMI (monthly payment)",
+    terms: [12, 24, 36, 48, 60, 72, 84],
+    ex: { price: 1000000, rate: 9, term: 60, downPct: 0.15, apy: 6.25, dep: 15, earn: 20000, hours: 45, dist: 900, econ: 18, fuel: 102, wear: 2.5 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "reducing balance", inputLabel: "Interest rate (% a year)", inputHint: "Choose below whether this is a reducing-balance or flat rate.",
+      desc: "Annual rate on a reducing balance: interest is charged only on what you still owe, the way the RBI Key Fact Statement shows it.",
+      rule: "Since October 2024 banks and NBFCs must give you a Key Facts Statement (KFS) showing the annual percentage rate, including processing and third-party fees, before you sign. Banks typically finance up to 90% of the on-road price." },
+    flat: true, flatRule: "Some dealers and lenders quote a flat rate, which charges interest on the full loan for the whole term. A flat rate is roughly half the true reducing-balance rate, so 7% flat is about 13% real. Choose “Flat rate” to convert.",
+    vat: 0,
+    balloon: { label: "Final balloon payment", hint: "Uncommon in India. Leave at 0 unless your loan has one.", rule: "" },
+    fee: { label: "Processing fee", hint: "Usually 0.5% to 2% of the loan, plus GST." },
+    prepay: { kind: "pct", pct: 3, capInterest: false, free: 0,
+      rule: "From 1 January 2026 RBI bans prepayment charges on floating-rate loans to individuals. Most car loans are fixed-rate, where lenders may still charge, often 2% to 5%, but only if it is shown in the Key Fact Statement. The example uses 3%." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Fixed-deposit interest is taxed at your slab rate. Banks deduct 10% TDS once a year’s interest passes ₹50,000 (₹1,00,000 for seniors). Enter your own slab rate." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "India has no standard per-kilometre deduction for app drivers. Deduct actual fuel and running costs, or use the presumptive scheme for small businesses if it applies to you." },
+    extra: {},
+    src: { all: [["RBI Key Facts Statement", "https://website.rbi.org.in/web/rbi/-/notifications/key-facts-statement-kfs-for-loans-advances"]], payoff: [["RBI prepayment charges 2026", "https://upstox.com/news/personal-finance/financial-regulations/new-rbi-rule-on-prepayment-charges-for-floating-rate-home-personal-mse-loans-from-january-1-2026-explained/article-177494"]] }
+  },
+
+  DE: {
+    code: "DE", name: "Germany", cur: "EUR", loc: "de-DE",
+    terms: [12, 24, 36, 48, 60, 72, 84, 96],
+    ex: { price: 40000, rate: 5.9, term: 60, downPct: 0.2, apy: 2, dep: 15, earn: 650, hours: 25, dist: 650, econ: 7, fuel: 1.7, wear: 0.08 },
+    rate: { method: "effective", input: "year", name: "APR", local: "effektiver Jahreszins", inputLabel: "Effektiver Jahreszins (% a year)", inputHint: "The effective annual rate from your offer.",
+      desc: "Effective annual rate (effektiver Jahreszins): the monthly rate compounded over 12 months, including lender costs, as EU law requires.",
+      rule: "Lenders must state the effektiver Jahreszins (§6 PAngV, based on the EU Consumer Credit Directive). It compounds the monthly rate, so it is higher than the nominal rate (Sollzins) for the same loan, and it includes all lender costs." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment (Schlussrate)", hint: "Ballonfinanzierung and Drei-Wege-Finanzierung end with a large final payment.", rule: "Balloon financing (Ballonfinanzierung, Drei-Wege-Finanzierung) is common. You pay low monthly rates and a large final payment (Schlussrate), which you can pay, refinance, or settle by returning the car." },
+    fee: { label: "Lender fees", hint: "Bearbeitungsgebühren are generally not allowed on consumer loans; leave at 0 unless your offer lists a fee." },
+    prepay: { kind: "eu", pct: 1, capInterest: true, free: 0,
+      rule: "You can repay early at any time. The lender’s compensation (Vorfälligkeitsentschädigung) is capped at 1% of the amount repaid early, or 0.5% with a year or less left, and never more than the interest you save (§502 BGB)." },
+    save: { tax: 26.375, allowance: 1000, kind: "interest",
+      rule: "Interest is taxed at a flat 25% plus 5.5% solidarity surcharge (26.375%), plus church tax if you pay it. The first €1,000 a year (€2,000 for couples) is tax-free with a Freistellungsauftrag." },
+    dist: { unit: "km", econ: "L100", fuel: "L" },
+    mileage: { kind: "flat", rate: 0.3, rule: "Business trips in a private car can be deducted at €0.30 per km. Do not confuse this with the commuting allowance (Entfernungspauschale)." },
+    extra: { apr: ["You have 14 days to withdraw from a consumer loan (§495 BGB)."] },
+    src: { all: [["§6 PAngV", "https://www.gesetze-im-internet.de/pangv_2022/__6.html"]], payoff: [["§502 BGB", "https://www.gesetze-im-internet.de/bgb/__502.html"]], refi: [["§502 BGB", "https://www.gesetze-im-internet.de/bgb/__502.html"]], save: [["§20 EStG", "https://www.gesetze-im-internet.de/estg/__20.html"]] }
+  },
+
+  FR: {
+    code: "FR", name: "France", cur: "EUR", loc: "fr-FR",
+    terms: [12, 24, 36, 48, 60, 72, 84],
+    ex: { price: 32000, rate: 6.5, term: 60, downPct: 0.2, apy: 1.7, dep: 15, earn: 600, hours: 25, dist: 650, econ: 6.5, fuel: 1.75, wear: 0.08 },
+    rate: { method: "effective", input: "year", name: "APR", local: "TAEG", inputLabel: "TAEG (% a year)", inputHint: "The taux annuel effectif global from your offer.",
+      desc: "Taux annuel effectif global (TAEG): the monthly rate compounded over 12 months, including fees and required insurance.",
+      rule: "Lenders must show the TAEG (Code de la consommation L314-1). It compounds the monthly rate and includes application fees, required insurance and broker fees." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment", hint: "Some crédit-bail and LOA-style offers end with a large final payment (option d’achat).", rule: "Leasing with an option to buy (LOA) is very common in France. Its final option d’achat works like a balloon payment." },
+    fee: { label: "Fees (frais de dossier, required insurance)", hint: "Costs that count toward the TAEG." },
+    prepay: { kind: "eu", pct: 1, capInterest: true, free: 10000,
+      rule: "Early repayment compensation is capped at 1% of the amount repaid early, or 0.5% with a year or less left, never more than the interest saved, and nothing at all if you repay €10,000 or less in any 12 months (L312-34)." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "The Livret A and LDDS are tax-free. Other taxable savings pay the flat tax (PFU), which rose to 31.4% for 2026 income (12.8% income tax plus 18.6% social charges)." },
+    dist: { unit: "km", econ: "L100", fuel: "L" },
+    mileage: { kind: "fr", rule: "Drivers taxed on actual expenses (régime réel) can use the barème kilométrique; for a 5 CV car it is distance × €0.636 up to 5,000 km a year, then distance × €0.357 + €1,395 up to 20,000 km. Micro-entrepreneurs cannot use it, because their flat allowance already covers costs." },
+    usury: { rate: 8.56, over: 6000 },
+    extra: { apr: ["Legal maximum rate (taux d’usure) for consumer loans over €6,000: 8.56% in Q4 2026. A loan above it is illegal.", "You have 14 calendar days to withdraw from the loan (L312-19)."] },
+    src: { all: [["Banque de France taux d’usure", "https://www.banque-france.fr/fr/statistiques/taux-et-cours/taux-dusure"]], payoff: [["Code de la consommation L312-34", "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032221077"]], refi: [["L312-34", "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032221077"]], gig: [["Barème kilométrique", "https://www.service-public.fr/particuliers/vosdroits/F1989"]] }
+  },
+
+  BR: {
+    code: "BR", name: "Brazil", cur: "BRL", loc: "pt-BR",
+    terms: [12, 24, 36, 48, 60, 72],
+    ex: { price: 95000, rate: 1.97, term: 48, downPct: 0.2, apy: 6.2, dep: 12, earn: 1800, hours: 40, dist: 900, econ: 11, fuel: 6.49, wear: 0.3 },
+    rate: { method: "effective", input: "month", name: "CET", local: "Custo Efetivo Total", inputLabel: "Interest rate (% a month, taxa a.m.)", inputHint: "Brazilian banks quote car loans as a monthly rate.",
+      desc: "Custo Efetivo Total (CET): the effective annual cost of the loan, compounding the monthly rate and including fees, IOF and insurance.",
+      rule: "Banks quote a monthly rate (taxa ao mês), which compounds: 1.97% a month is about 26.4% a year. They must also show the CET, the effective annual cost including IOF, fees (tarifas), insurance and registration (Resolução CMN 4.881)." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment (parcela balão)", hint: "Brand banks offer plans with a large final installment.", rule: "Plans with a large final installment (parcela balão) are offered by brand banks." },
+    fee: { label: "Fees, IOF and insurance", hint: "Tarifas, registration, IOF and required insurance. These count toward the CET." },
+    prepay: { kind: "none", pct: 0, capInterest: false, free: 0,
+      rule: "The Consumer Defense Code (art. 52 §2) gives you the right to repay early, in full or in part, with a proportional cut in interest, and banks cannot charge a fee for it on contracts signed since 2007." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Poupança is exempt from income tax. CDBs pay income tax on a falling scale: 22.5% up to 180 days, 20% up to 360, 17.5% up to 720, then 15%. The example uses poupança." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "There is no per-km deduction. App drivers paying carnê-leão are taxed on 60% of gross passenger-transport income; MEI registration is another option." },
+    extra: { apr: ["IOF on personal credit is 0.38% plus 0.0082% a day (up to 365 days), about 3.38% at most. It is usually financed with the loan."] },
+    src: { all: [["Resolução CMN 4.881 (CET)", "https://www.bcb.gov.br/content/estabilidadefinanceira/especialnor/Resolu%C3%A7%C3%A3o4881.pdf"], ["Código de Defesa do Consumidor", "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm"]] }
+  },
+
+  GB: {
+    code: "GB", name: "United Kingdom", cur: "GBP", loc: "en-GB",
+    terms: [12, 24, 36, 48, 60],
+    ex: { price: 32000, rate: 8.9, term: 48, downPct: 0.1, apy: 4, dep: 15, earn: 550, hours: 25, dist: 400, econ: 45, fuel: 1.33, wear: 0.08 },
+    rate: { method: "effective", input: "year", name: "APR", local: "", inputLabel: "APR (% a year)", inputHint: "The representative or personal APR from your quote.",
+      desc: "APR as UK law defines it: the monthly rate compounded over 12 months, including all required fees.",
+      rule: "UK APR is an effective rate: it compounds the monthly rate and includes arrangement, admin and option-to-purchase fees. That makes it higher than the flat or nominal rate dealers sometimes mention." },
+    flat: false, vat: 0,
+    balloon: { label: "Final payment (PCP balloon / GFV)", hint: "On a PCP deal, the final “optional payment” or GFV. Leave at 0 for hire purchase.", rule: "Personal Contract Purchase (PCP) is the most common way to finance a new car. Monthly payments cover the drop in value and you choose at the end to pay the optional final payment (GFV), hand the car back, or part-exchange it." },
+    fee: { label: "Fees (arrangement, admin, option-to-purchase)", hint: "Fees that count toward the APR." },
+    prepay: { kind: "eu", pct: 1, capInterest: true, free: 8000,
+      rule: "You can settle early at any time. The lender’s charge is capped at 1% of the amount repaid early, or 0.5% with a year or less left, never more than the interest you would have paid, and nothing if you repay £8,000 or less in any 12 months (Consumer Credit Act s.95A)." },
+    save: { tax: 20, allowance: 1000, kind: "interest",
+      rule: "The Personal Savings Allowance makes the first £1,000 of interest tax-free for basic-rate taxpayers (£500 higher-rate, £0 additional-rate). Above it, interest is taxed at your income tax rate. Savings tax rates rise by 2 points from April 2027." },
+    dist: { unit: "mi", econ: "mpgUK", fuel: "L" },
+    mileage: { kind: "tiered", tiers: [{ upTo: 10000, rate: 0.45 }, { rate: 0.25 }], rule: "Sole traders can use HMRC simplified expenses: 45p per business mile for the first 10,000 miles a year, then 25p. You cannot use them if you have claimed capital allowances on the car." },
+    extra: { neg: ["On hire purchase and PCP you can end the agreement and hand the car back once you have paid half the total amount payable, including fees and the final payment (Consumer Credit Act s.99 and s.100). Below that point you pay the difference."], apr: ["You have 14 days to withdraw from a credit agreement (Consumer Credit Act s.66A)."] },
+    src: { all: [["FCA CONC App 1", "https://www.handbook.fca.org.uk/handbook/CONC/App/1/"]], payoff: [["Consumer Credit Act s.95A", "https://www.legislation.gov.uk/ukpga/1974/39/section/95A"]], refi: [["Consumer Credit Act s.95A", "https://www.legislation.gov.uk/ukpga/1974/39/section/95A"]], neg: [["Consumer Credit Act s.99", "https://www.legislation.gov.uk/ukpga/1974/39/section/99"]], save: [["GOV.UK tax on savings interest", "https://www.gov.uk/apply-tax-free-interest-on-savings"]], gig: [["HMRC simplified expenses", "https://www.gov.uk/simpler-income-tax-simplified-expenses/vehicles-"]] }
+  },
+
+  CA: {
+    code: "CA", name: "Canada", cur: "CAD", loc: "en-CA",
+    terms: [24, 36, 48, 60, 72, 84, 96],
+    ex: { price: 60000, rate: 7, term: 84, downPct: 0.1, apy: 2.5, dep: 15, earn: 900, hours: 25, dist: 650, econ: 9, fuel: 1.4, wear: 0.08 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "", inputLabel: "APR (% a year)", inputHint: "From your lender’s cost of borrowing disclosure.",
+      desc: "APR as Canadian rules define it: an annual rate on the average balance that equals the interest rate when interest is the only cost, plus required fees.",
+      rule: "Lenders must disclose the APR and total cost of borrowing. When interest is the only cost, the APR equals the interest rate; required fees and insurance raise it (Cost of Borrowing Regulations)." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment", hint: "Uncommon in Canada. Leave at 0 unless your loan has one.", rule: "" },
+    fee: { label: "Required fees", hint: "Admin fees, broker fees, or required insurance that count toward the cost of borrowing." },
+    prepay: { kind: "none", pct: 0, capInterest: false, free: 0,
+      rule: "Bank loans can be repaid in full at any time with no charge or penalty (Bank Act s.627.28). Non-bank and dealer loans fall under provincial law, which is generally similar." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Interest is taxed as ordinary income at your marginal rate. Saving inside a TFSA makes the interest tax-free. Enter your own rate." },
+    dist: { unit: "km", econ: "L100", fuel: "L" },
+    mileage: { kind: "none", rule: "The CRA per-km rates (73¢ for the first 5,000 km in 2026, then 67¢) are for employer allowances. Self-employed drivers deduct the business share of actual car expenses and keep a logbook." },
+    cap: { rate: 35, label: "under Canada’s criminal interest rate limit (Criminal Code s.347)" },
+    extra: { apr: ["The criminal interest rate limit is 35% APR (Criminal Code s.347)."] },
+    src: { all: [["Cost of Borrowing Regulations", "https://laws.justice.gc.ca/eng/regulations/SOR-2021-181/"]], payoff: [["Bank Act s.627.28", "https://laws-lois.justice.gc.ca/eng/acts/B-1.01/section-627.28.html"]], refi: [["Bank Act s.627.28", "https://laws-lois.justice.gc.ca/eng/acts/B-1.01/section-627.28.html"]], gig: [["CRA guide T4002", "https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002.html"]] }
+  },
+
+  KR: {
+    code: "KR", name: "South Korea", cur: "KRW", loc: "ko-KR",
+    terms: [12, 24, 36, 48, 60, 72],
+    ex: { price: 40000000, rate: 5.6, term: 60, downPct: 0.2, apy: 3.5, dep: 15, earn: 700000, hours: 30, dist: 650, econ: 12, fuel: 1860, wear: 100 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "연이율", inputLabel: "Interest rate (연이율, % a year)", inputHint: "The annual rate on your installment (할부) or loan offer.",
+      desc: "Annual rate (연이율) on the remaining balance with equal monthly payments (원리금균등).",
+      rule: "Car installment plans (자동차 할부) and auto loans quote an annual rate on the remaining balance, usually repaid in equal monthly installments (원리금균등상환)." },
+    flat: false, vat: 0,
+    balloon: { label: "Deferred final payment (유예금)", hint: "Deferred installment plans (유예할부) leave part of the price as a final payment.", rule: "Deferred installment plans (유예할부) are common, often deferring 45% to 55% of the price to the final payment. That keeps monthly payments low but adds interest." },
+    fee: { label: "Loan fees", hint: "Any fees charged to take out the loan." },
+    prepay: { kind: "pct", pct: 1, capInterest: false, free: 0,
+      rule: "Under the Financial Consumer Protection Act, lenders cannot charge an early repayment fee (중도상환수수료) once a loan is more than 3 years old. Since January 2025, fees in the first 3 years may only cover the lender’s actual costs; auto installment fees are usually 0% to 2%, shrinking as the loan ages. The example uses 1%." },
+    save: { tax: 15.4, allowance: 0, kind: "interest",
+      rule: "Deposit interest is taxed at 15.4% (14% income tax plus 1.4% local tax), withheld by the bank automatically." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "Korea has no standard per-km deduction. Self-employed drivers deduct actual expenses, or use the simple expense rate (단순경비율) if their income is small." },
+    extra: {},
+    src: { all: [["Hyundai balloon installment terms", "https://www.hyundai.com/kr/ko/event/event-hyundai-easy-start-ballon_installment_plan_2605"]], payoff: [["2025 early repayment fee reform", "https://www.fnnews.com/news/202501091251452034"]], refi: [["2025 early repayment fee reform", "https://www.fnnews.com/news/202501091251452034"]] }
+  },
+
+  MX: {
+    code: "MX", name: "Mexico", cur: "MXN", loc: "es-MX",
+    terms: [12, 24, 36, 48, 60, 72],
+    ex: { price: 350000, rate: 14, term: 48, downPct: 0.2, apy: 6, dep: 12, earn: 6500, hours: 40, dist: 800, econ: 13, fuel: 24, wear: 1.5 },
+    rate: { method: "effective", inputMethod: "nominal", input: "year", name: "CAT", local: "Costo Anual Total", inputLabel: "Tasa de interés anual (sin IVA, %)", inputHint: "The advertised annual rate before IVA.",
+      desc: "Costo Anual Total (CAT): the effective yearly cost of the loan including fees and insurance, calculated without IVA as Banxico requires.",
+      rule: "Lenders advertise a nominal annual rate (tasa anual sin IVA) and must also show the CAT, an all-in effective annual cost including fees and insurance, calculated without IVA (Banxico)." },
+    flat: false,
+    vat: 0.16, vatRule: "IVA of 16% is charged on the interest of car loans to individuals, so your actual payment is higher than the rate alone suggests. The calculator adds it to the payment and leaves it out of the CAT, as the law requires.",
+    balloon: { label: "Final balloon payment (pago final)", hint: "Some brand financing plans end with a large final payment.", rule: "" },
+    fee: { label: "Opening fee (comisión por apertura)", hint: "Often around 3% of the loan, plus IVA." },
+    prepay: { kind: "none", pct: 0, capInterest: false, free: 0,
+      rule: "Banks must accept early payments on consumer credit when you are up to date and apply them to the principal (Banxico Circular 16/2007), and in practice there is no penalty." },
+    save: { tax: 0.9, allowance: 0, kind: "capital",
+      rule: "Banks withhold ISR at 0.90% a year of the capital in 2026 (up from 0.50% in 2025), set in the Ley de Ingresos." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "There is no per-km deduction. Platforms withhold 2.1% ISR and 8% IVA; above MXN 300,000 a year you deduct actual expenses with CFDI invoices." },
+    extra: {},
+    src: { all: [["Banxico: what is the CAT", "https://www.banxico.org.mx/CAT/Explicaciones.html"]], payoff: [["Banxico Circular 16/2007", "https://www.abm.org.mx/legislacion-y-regulacion/juridico/banxico/circulares/2007/Circular%2016%202007.pdf"]] }
+  },
+
+  NG: {
+    code: "NG", name: "Nigeria", cur: "NGN", loc: "en-NG",
+    terms: [12, 18, 24, 36, 48, 60],
+    ex: { price: 15000000, rate: 28, term: 36, downPct: 0.3, apy: 7, dep: 12, earn: 300000, hours: 45, dist: 900, econ: 11, fuel: 1360, wear: 40 },
+    rate: { method: "nominal", input: "year", name: "APR", local: "", inputLabel: "Interest rate (% per annum)", inputHint: "Choose below whether this is a reducing-balance or flat rate.",
+      desc: "Annual rate on a reducing balance: interest is charged only on what you still owe.",
+      rule: "Banks quote car loans as a percentage per annum, often 22% to 36%. CBN consumer protection rules require a key-facts statement showing the total cost of credit." },
+    flat: true, flatRule: "Some lenders and dealer schemes quote a flat rate, which charges interest on the full loan for the whole term. Choose “Flat rate” to see the true reducing-balance rate.",
+    vat: 0,
+    balloon: { label: "Final balloon payment", hint: "Rare in Nigeria. Leave at 0 unless your loan has one.", rule: "" },
+    fee: { label: "Management fee and insurance", hint: "Banks often charge about a 1% management fee and require comprehensive insurance." },
+    prepay: { kind: "pct", pct: 1, capInterest: false, free: 0,
+      rule: "Early repayment is allowed. Charges are negotiable under the CBN Guide to Charges and typically range from 0% to 3%. The example uses 1%." },
+    save: { tax: 10, allowance: 0, kind: "interest",
+      rule: "Banks deduct 10% withholding tax on deposit interest." },
+    dist: { unit: "km", econ: "kmL", fuel: "L" },
+    mileage: { kind: "none", rule: "There is no per-km rule. Deduct actual business expenses and keep records." },
+    extra: {},
+    src: { all: [["Central Bank of Nigeria", "https://www.cbn.gov.ng/"]], save: [["PwC Nigeria tax summary", "https://taxsummaries.pwc.com/nigeria/individual"]] }
+  },
+
+  EU: {
+    code: "EU", name: "Other euro countries", cur: "EUR", loc: "en-IE",
+    terms: [12, 24, 36, 48, 60, 72, 84, 96],
+    ex: { price: 32000, rate: 6.5, term: 60, downPct: 0.2, apy: 2, dep: 15, earn: 600, hours: 25, dist: 650, econ: 6.5, fuel: 1.75, wear: 0.08 },
+    rate: { method: "effective", input: "year", name: "APR", local: "APRC", inputLabel: "APRC (% a year)", inputHint: "The annual percentage rate of charge from your offer.",
+      desc: "Annual percentage rate of charge (APRC): the monthly rate compounded over 12 months, including lender costs, as the EU Consumer Credit Directive requires.",
+      rule: "Across the EU, lenders must show the APRC, which compounds the monthly rate and includes the lender’s costs. The rules in this mode follow the EU Consumer Credit Directive; your country may add its own." },
+    flat: false, vat: 0,
+    balloon: { label: "Final balloon payment", hint: "Balloon and PCP-style finance is common in many euro countries.", rule: "Balloon and residual-value finance is common across Europe." },
+    fee: { label: "Lender fees", hint: "Costs that count toward the APRC." },
+    prepay: { kind: "eu", pct: 1, capInterest: true, free: 0,
+      rule: "Under the EU Consumer Credit Directive you can repay early at any time, and compensation is capped at 1% of the amount repaid early (0.5% with a year or less left), never more than the interest saved." },
+    save: { tax: 0, allowance: 0, kind: "interest",
+      rule: "Tax on savings interest varies by country. Enter your country’s rate." },
+    dist: { unit: "km", econ: "L100", fuel: "L" },
+    mileage: { kind: "none", rule: "Mileage deductions vary by country. Use your actual costs or your country’s official rate." },
+    extra: { apr: ["You have 14 days to withdraw from a consumer credit agreement."] },
+    src: { all: [["EU Consumer Credit Directive", "https://eur-lex.europa.eu/eli/dir/2023/2225/oj"]] }
+  }
+};
+
+// Country engine: picks the visitor's country, formats money for it, and holds the shared loan math.
+// Depends on window.CAR_DATA (countries.js), which is inlined just before this file.
+(function () {
+  var D = window.CAR_DATA;
+  var ORDER = D._order;
+  var KEY = 'carapr-country';
+  var EURO = ['AT', 'BE', 'BG', 'CY', 'EE', 'ES', 'FI', 'GR', 'HR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PT', 'SI', 'SK'];
+  var LANG = { ja: 'JP', ko: 'KR', zh: 'CN', hi: 'IN', bn: 'IN', ta: 'IN', te: 'IN', mr: 'IN', gu: 'IN', kn: 'IN', ml: 'IN', pa: 'IN', ur: 'IN',
+               de: 'DE', fr: 'FR', pt: 'BR', es: 'MX', ha: 'NG', yo: 'NG', ig: 'NG', it: 'EU', nl: 'EU', el: 'EU', fi: 'EU', et: 'EU', lv: 'EU', lt: 'EU', sk: 'EU', sl: 'EU', hr: 'EU', mt: 'EU', ga: 'EU', bg: 'EU' };
+
+  function load() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function save(v) { try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch (e) {} }
+
+  function fromTag(tag) {
+    if (!tag) return null;
+    var p = String(tag).replace('_', '-').split('-');
+    var lang = (p[0] || '').toLowerCase(), reg = (p[1] || '').toUpperCase();
+    if (reg === 'UK') reg = 'GB';
+    if (reg && D[reg] && reg !== 'EU') return reg;
+    if (reg && EURO.indexOf(reg) >= 0) return 'EU';
+    if (lang === 'en' || !lang) return null;
+    return LANG[lang] || null;
+  }
+  function fromBrowser() {
+    var tags = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language];
+    for (var i = 0; i < tags.length; i++) { var c = fromTag(tags[i]); if (c) return c; }
+    return 'US';
+  }
+
+  var cur = null, fmtCache = {};
+  function C() { return D[cur]; }
+  function nf(key, opts) {
+    var k = cur + '|' + key;
+    if (!fmtCache[k]) {
+      try { fmtCache[k] = new Intl.NumberFormat(C().loc, opts); }
+      catch (e) { fmtCache[k] = new Intl.NumberFormat('en-US', opts); }
+    }
+    return fmtCache[k];
+  }
+  function money(v) { return nf('m', { style: 'currency', currency: C().cur, currencyDisplay: 'narrowSymbol' }).format(v); }
+  function money0(v) { return nf('m0', { style: 'currency', currency: C().cur, currencyDisplay: 'narrowSymbol', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(v); }
+  function smoney0(v) { return (v < -0.5 ? '-' : '') + money0(Math.abs(v)); }
+  function smoney(v) { return (v < -0.005 ? '-' : '') + money(Math.abs(v)); }
+  function num(v, d) { return nf('n' + (d || 0), { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }).format(v); }
+  function pct(v, d) { return nf('p' + (d == null ? 2 : d), { style: 'percent', minimumFractionDigits: d == null ? 2 : d, maximumFractionDigits: d == null ? 2 : d }).format(v / 100); }
+  function symbol() {
+    try {
+      var parts = nf('m', { style: 'currency', currency: C().cur, currencyDisplay: 'narrowSymbol' }).formatToParts(1);
+      for (var i = 0; i < parts.length; i++) if (parts[i].type === 'currency') return parts[i].value;
+    } catch (e) {}
+    return C().cur;
+  }
+  function minorDigits() { return nf('m', { style: 'currency', currency: C().cur }).resolvedOptions().maximumFractionDigits; }
+  // Round to a tidy example figure in the local currency.
+  function nice(v, sig) {
+    sig = sig || 3;
+    if (!(v > 0)) return 0;
+    var mag = Math.pow(10, Math.floor(Math.log10(v)) - sig + 1);
+    return Math.round(v / mag) * mag;
+  }
+  function when(m) {
+    var d = new Date();
+    d.setMonth(d.getMonth() + m);
+    try { return d.toLocaleDateString(C().loc, { month: 'long', year: 'numeric' }); }
+    catch (e) { return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }); }
+  }
+  function span(m) {
+    var y = Math.floor(m / 12), mo = m % 12, parts = [];
+    if (y > 0) parts.push(y + (y === 1 ? ' year' : ' years'));
+    if (mo > 0 || y === 0) parts.push(mo + (mo === 1 ? ' month' : ' months'));
+    return parts.join(' ');
+  }
+
+  // ---------- Loan math (monthly periods) ----------
+  var FIN = {
+    // Level payment for loan L at monthly rate i over n months, leaving balloon B at the end (B paid with the last payment).
+    annuity: function (L, i, n, B) {
+      B = B || 0;
+      if (i < 1e-12) return (L - B) / n;
+      var v = Math.pow(1 + i, -n);
+      return (L - B * v) * i / (1 - v);
+    },
+    pv: function (M, i, n, B) {
+      B = B || 0;
+      if (i < 1e-12) return M * n + B;
+      var v = Math.pow(1 + i, -n);
+      return M * (1 - v) / i + B * v;
+    },
+    // Monthly rate that makes n payments of M plus balloon B worth exactly P today.
+    // Returns -1 if the payments don't even repay P, Infinity if absurdly high.
+    solve: function (P, M, n, B) {
+      B = B || 0;
+      if (!(P > 0) || !(M >= 0) || !(n > 0)) return NaN;
+      if (M * n + B < P - 0.005) return -1;
+      if (M * n + B - P <= 0.005) return 0;
+      var lo = 0, hi = 1;
+      if (FIN.pv(M, hi, n, B) > P) return Infinity;
+      for (var k = 0; k < 200; k++) {
+        var mid = (lo + hi) / 2;
+        if (FIN.pv(M, mid, n, B) > P) lo = mid; else hi = mid;
+      }
+      return (lo + hi) / 2;
+    },
+    // Monthly IRR of an arbitrary list of monthly flows (flows[k] paid at month k+1) against amount P received today.
+    irr: function (P, flows) {
+      var f = function (i) { var s = 0, d = 1; for (var k = 0; k < flows.length; k++) { d /= (1 + i); s += flows[k] * d; } return s; };
+      var tot = 0; for (var k = 0; k < flows.length; k++) tot += flows[k];
+      if (tot < P - 0.005) return -1;
+      if (tot - P <= 0.005) return 0;
+      var lo = 0, hi = 1;
+      if (f(hi) > P) return Infinity;
+      for (var j = 0; j < 200; j++) { var mid = (lo + hi) / 2; if (f(mid) > P) lo = mid; else hi = mid; }
+      return (lo + hi) / 2;
+    },
+    nominal: function (i) { return i * 1200; },
+    effective: function (i) { return (Math.pow(1 + i, 12) - 1) * 100; },
+    // Annual figure the country's law uses for its headline rate.
+    headline: function (i) { return C().rate.method === 'effective' ? FIN.effective(i) : FIN.nominal(i); },
+    // Turn a rate typed in the country's own convention into a monthly rate.
+    toMonthly: function (r) {
+      var R = C().rate;
+      if (R.input === 'month') return r / 100;
+      return (R.inputMethod || R.method) === 'effective' ? Math.pow(1 + r / 100, 1 / 12) - 1 : r / 1200;
+    },
+    fromMonthly: function (i) {
+      var R = C().rate;
+      if (R.input === 'month') return i * 100;
+      return (R.inputMethod || R.method) === 'effective' ? FIN.effective(i) : FIN.nominal(i);
+    },
+    // Flat-rate loans charge interest on the original amount for the whole term.
+    flatPayment: function (P, flatPct, n) { return P * (1 + flatPct / 100 * n / 12) / n; },
+    flatFromPayment: function (P, M, n) { return (M * n - P) / P / (n / 12) * 100; },
+    // Early repayment charge for repaying `amount` early with `monthsLeft` remaining.
+    // `interestAvoided` is the interest the borrower no longer pays because of it (the legal ceiling in the UK and EU).
+    // pctTyped is the fee the visitor entered. In the UK and EU the law caps it at 1% of the amount
+    // (0.5% with 12 months or less left) and at the interest the borrower avoids.
+    prepayFee: function (amount, monthsLeft, interestAvoided, pctTyped) {
+      var p = C().prepay;
+      if (!(amount > 0) || !(pctTyped > 0)) return 0;
+      var pctUsed = pctTyped;
+      if (p.kind === 'eu') pctUsed = Math.min(pctTyped, monthsLeft > 12 ? 1 : 0.5);
+      var fee = amount * pctUsed / 100;
+      if (p.capInterest && interestAvoided >= 0) fee = Math.min(fee, interestAvoided);
+      return Math.max(fee, 0);
+    },
+    prepayCapPct: function (monthsLeft) { return C().prepay.kind === 'eu' ? (monthsLeft > 12 ? 1 : 0.5) : null; }
+  };
+
+  // ---------- Picker ----------
+  function renderPicker() {
+    var sel = document.getElementById('country');
+    if (!sel) return;
+    if (!sel.options.length || sel.options.length !== ORDER.length) {
+      sel.textContent = '';
+      ORDER.forEach(function (code) {
+        var o = document.createElement('option');
+        o.value = code;
+        o.textContent = D[code].name + ' · ' + D[code].cur;
+        sel.appendChild(o);
+      });
+    }
+    sel.value = cur;
+  }
+  function applyCurrency() {
+    var s = symbol();
+    var pres = document.querySelectorAll('.pre[data-cur]');
+    for (var i = 0; i < pres.length; i++) pres[i].textContent = s;
+    // Give each input room for the symbol, which can be one to three characters wide.
+    requestAnimationFrame(function () {
+      for (var i = 0; i < pres.length; i++) {
+        var inp = pres[i].parentNode.querySelector('input');
+        if (inp) inp.style.paddingLeft = (pres[i].offsetWidth + 18) + 'px';
+      }
+    });
+  }
+  function track(name, params) { try { if (typeof window.gtag === 'function') window.gtag('event', name, params || {}); } catch (e) {} }
+  var listeners = [];
+  function set(code, how) {
+    if (!D[code] || code === '_order') code = 'US';
+    var changed = code !== cur;
+    cur = code;
+    if (how === 'manual') { save(code); track('country_change', { country: code }); }
+    document.documentElement.setAttribute('data-country', code);
+    renderPicker();
+    applyCurrency();
+    if (changed) listeners.forEach(function (fn) { fn(D[code], code); });
+  }
+
+  function init() {
+    var stored = load(), forced = window.CAR_FORCE;
+    // Country landing pages open in their own country; elsewhere use the saved choice or the browser language.
+    set(forced && D[forced] ? forced : (stored && D[stored] ? stored : fromBrowser()), 'auto');
+    var sel = document.getElementById('country');
+    if (sel) sel.addEventListener('change', function () { set(sel.value, 'manual'); });
+    // One calculator_use event per page view, the first time a visitor changes an input.
+    var calc = document.querySelector('.calc');
+    if (calc) {
+      var used = false;
+      var onUse = function () {
+        if (used) return;
+        used = true;
+        track('calculator_use', { calculator: calc.getAttribute('aria-label') || document.title, country: cur });
+      };
+      calc.addEventListener('input', onUse);
+      calc.addEventListener('change', onUse);
+    }
+    // Google Translate changes <html lang>. Follow it unless the visitor picked a country themselves.
+    var lastLang = document.documentElement.lang;
+    new MutationObserver(function () {
+      var l = document.documentElement.lang;
+      if (l === lastLang) return;
+      lastLang = l;
+      if (load() || window.CAR_FORCE) return;
+      var c = fromTag(l);
+      set(c || fromBrowser(), 'auto');
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  }
+
+  // "Sources:" line for the rules panel. page picks page-specific links, falling back to the country's general ones.
+  function sources(c, page) {
+    var list = (c.src && (c.src[page] || [])).concat(c.src && c.src.all || []);
+    if (!list.length) return '';
+    return '<p class="src">Sources: ' + list.map(function (s) {
+      return '<a href="' + s[1] + '" target="_blank" rel="noopener">' + s[0] + '</a>';
+    }).join(' · ') + '. Rules checked October 2026. Typical figures are estimates; your lender’s documents are the official numbers.</p>';
+  }
+
+  window.CAR = {
+    data: D, FIN: FIN, init: init, set: set, sources: sources, track: track,
+    c: function () { return D[cur]; }, code: function () { return cur; },
+    onChange: function (fn) { listeners.push(fn); },
+    money: money, money0: money0, smoney0: smoney0, smoney: smoney, num: num, pct: pct, symbol: symbol, minorDigits: minorDigits,
+    nice: nice, when: when, span: span, fromTag: fromTag
+  };
+})();
+
+</script>
+<script>
+(function () {
+  var F = CAR.FIN;
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  function C() { return CAR.c(); }
+
+  function loadExample() {
+    var c = C(), x = c.ex;
+    var bal = CAR.nice(x.price * 0.85, 2), n = x.term;
+    $('bal').value = bal;
+    $('value').value = CAR.nice(x.price * 0.72, 2);
+    $('apr').value = x.rate;
+    $('n').value = n;
+    $('balloon').value = 0;
+    $('dep').value = x.dep;
+    $('aprLabel').textContent = c.rate.inputLabel;
+    $('balloonLabel').textContent = c.balloon.label + ' (optional)';
+    $('balloonHint').textContent = c.balloon.hint;
+    var uk = c.code === 'GB';
+    $('f-uk').hidden = !uk;
+    if (uk) {
+      var M = F.annuity(bal, F.toMonthly(x.rate), n);
+      var tap = CAR.nice(M * (n + 12) + x.price * x.downPct, 2);
+      $('tap').value = tap;
+      $('paid').value = CAR.nice(tap - M * n, 2);
+    }
+    $('exNote').textContent = 'Example numbers for ' + c.name + ' are filled in. Replace them with your own.';
+    renderRules();
+  }
+
+  // Month-by-month car value and loan balance. Index m is after m payments.
+  function path(B, i, n, value0, depPct, balloon) {
+    var M = F.annuity(B, i, n, balloon), bal = B, out = [];
+    for (var m = 0; m <= n; m++) {
+      if (m > 0) bal = m === n ? 0 : Math.max(bal * (1 + i) - M, 0);
+      var v = value0 * Math.pow(1 - depPct / 100, m / 12);
+      out.push({ m: m, value: v, bal: bal, eq: v - bal });
+    }
+    return { M: M, rows: out };
+  }
+  function label(m) {
+    if (m === 0) return 'Today';
+    if (m % 12 === 0) { var y = m / 12; return y + (y === 1 ? ' year' : ' years'); }
+    return m + ' months';
+  }
+  function showError(t) { $('msg').textContent = t; $('msg').hidden = false; $('body').hidden = true; }
+
+  function render() {
+    var c = C();
+    var B = num('bal'), value = num('value'), r = num('apr'), n = Math.round(num('n')), dep = num('dep'), balloon = num('balloon');
+    $('pay').textContent = CAR.money(0);
+    if (!(B > 0)) return showError('Enter your loan balance to get started.');
+    if (!(value > 0)) return showError('Enter what the car is worth today.');
+    if (!(n >= 1) || n > 120) return showError('Enter the months left on your loan, from 1 to 120.');
+    if (r < 0 || r > (c.rate.input === 'month' ? 30 : 200)) return showError('Check the interest rate.');
+    if (dep < 0 || dep > 90) return showError('Enter a yearly value loss between 0% and 90%.');
+    if (balloon < 0 || balloon >= B) return showError('The final payment must be smaller than the loan balance.');
+
+    var i = F.toMonthly(r) * (1 + (c.vat || 0));
+    var P = path(B, i, n, value, dep, balloon), rows = P.rows;
+    var eq0 = rows[0].eq, be = null;
+    for (var k = 0; k < rows.length; k++) if (rows[k].eq >= 0) { be = rows[k].m; break; }
+    $('pay').textContent = CAR.money(P.M);
+    $('msg').hidden = true;
+    $('body').hidden = false;
+    $('resBig').textContent = CAR.smoney0(eq0);
+    $('resBig').style.color = eq0 < 0 ? 'var(--warm)' : '';
+    if (eq0 >= 0) $('resSub').textContent = 'Your car is worth ' + CAR.money0(eq0) + ' more than you owe, so you could sell or trade it in without a gap.';
+    else $('resSub').textContent = 'You owe ' + CAR.money0(-eq0) + ' more than the car is worth.' + (be === null ? '' : ' At this pace you reach break-even around ' + CAR.when(be) + '.') + (balloon > 0 ? ' A large final payment keeps the balance high until the end, so negative equity lasts longer.' : '');
+    $('sVal').textContent = CAR.money0(value);
+    $('sBal').textContent = CAR.money0(B);
+    $('sBreak').textContent = eq0 >= 0 ? 'Already there' : (be === null ? 'Not before payoff' : 'In ' + be + (be === 1 ? ' month' : ' months'));
+    $('sRoll').textContent = CAR.money0(Math.max(-eq0, 0));
+
+    // UK: voluntary termination once half the total amount payable is paid (CCA s.99/100)
+    var box = $('ukBox');
+    box.hidden = true;
+    if (c.code === 'GB') {
+      var tap = num('tap'), paid = num('paid');
+      if (tap > 0) {
+        var half = tap / 2;
+        box.hidden = false;
+        box.textContent = paid >= half
+          ? 'You have paid ' + CAR.money0(paid) + ', which is at least half of ' + CAR.money0(tap) + '. You can use voluntary termination to hand the car back and owe nothing more, as long as it is in reasonable condition.'
+          : 'Voluntary termination: you can hand the car back once you have paid half of ' + CAR.money0(tap) + ', which is ' + CAR.money0(half) + '. You have paid ' + CAR.money0(paid) + ', so ' + CAR.money0(half - paid) + ' more, about ' + Math.ceil((half - paid) / P.M) + ' more payments. Ending now, you would pay that difference.';
+      }
+    }
+
+    var tbody = $('rows');
+    tbody.textContent = '';
+    rows.filter(function (p) { return p.m % 12 === 0 || p.m === n; }).slice(0, 9).forEach(function (p) {
+      var tr = document.createElement('tr');
+      if (p.m === 0) tr.className = 'now';
+      [label(p.m), CAR.money0(p.value), CAR.money0(p.bal), CAR.smoney0(p.eq)].forEach(function (txt) {
+        var td = document.createElement('td'); td.textContent = txt; tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderRules() {
+    var c = C();
+    var items = [];
+    if (c.balloon.rule) items.push(c.balloon.rule);
+    (c.extra && c.extra.neg || []).forEach(function (t) { items.push(t); });
+    items.push(c.prepay.rule);
+    $('rules').innerHTML = '<h2>Negative equity in ' + c.name + '</h2><ul>' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' + CAR.sources(c, 'neg');
+  }
+
+  ['bal', 'value', 'apr', 'n', 'dep', 'balloon', 'tap', 'paid'].forEach(function (id) { $(id).addEventListener('input', render); });
+  CAR.onChange(function () { loadExample(); render(); });
+  CAR.init();
+})();
+</script>
+</body>
+</html>

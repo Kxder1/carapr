@@ -1,0 +1,68 @@
+  <section class="calc" aria-label="Pay off car loan early calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note" id="exNote">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="bal">Loan balance today</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="bal" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+        <div class="field">
+          <label for="apr" id="aprLabel">APR</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1"><span class="suf">%</span></div>
+          <p class="hint">Not sure? Use the <a href="index.html">car APR calculator</a>.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="n">Months left on the loan</label>
+          <div class="control"><input id="n" type="number" inputmode="numeric" min="1" max="120" step="1"></div>
+        </div>
+        <div class="field">
+          <label for="extra">Extra paid each month</label>
+          <div class="control has-pre"><span class="pre" data-cur>$</span><input id="extra" type="number" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </div>
+
+      <div class="field" id="f-fee">
+        <label for="fee">Early repayment fee</label>
+        <div class="control has-suf"><input id="fee" type="number" inputmode="decimal" min="0" max="10" step="0.1"><span class="suf">%</span></div>
+        <p class="hint" id="feeHint">Percent of the extra amount the lender charges. Check your contract.</p>
+      </div>
+
+      <div class="financed"><span>Your regular monthly payment</span><strong id="pay" translate="no">0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Interest you save</p>
+          <p class="big" id="resBig" translate="no">0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Paid off in</span><b id="sPayoff">0</b></div>
+          <div class="stat"><span>Time saved</span><b id="sSaved">0</b></div>
+          <div class="stat"><span>Interest with extra payments</span><b id="sInt" translate="no">0</b></div>
+          <div class="stat"><span>Early repayment fees</span><b id="sFee" translate="no">0</b></div>
+        </div>
+
+        <div>
+          <div class="bar" role="img" id="bar" aria-label="Interest saved versus interest still paid"><i class="p" id="barP"></i><i class="c" id="barC"></i></div>
+          <div class="legend"><span id="legP">Interest saved</span><span class="c" id="legC">Interest still paid</span></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Different extra payments</h2>
+          <table>
+            <thead><tr><th scope="col">Extra per month</th><th scope="col">Paid off in</th><th scope="col">Saved after fees</th></tr></thead>
+            <tbody id="rows" translate="no"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+  <aside class="rules" id="rules" aria-live="polite"></aside>

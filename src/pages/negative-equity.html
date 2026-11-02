@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>Negative Equity Car Calculator: Do You Owe More Than It's Worth</title>
+<meta name="description" content="Free negative equity calculator for car loans. Compare your loan balance to your car's value, see what a trade-in would add to your next loan, and when you reach break-even.">
+<link rel="canonical" href="https://carapr.org/negative-equity.html">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3289369952589760" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<!--INLINE:style.css-->
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--accent)"/><text x="12" y="17" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" style="fill:var(--accent-ink)">%</text></svg>
+    <a class="brand" href="index.html">Car Calculators</a>
+    <div class="menu">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuList">
+        Calculators
+        <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="menu-list" id="menuList" hidden>
+        <li><a href="index.html"><b>Car APR</b><span>Find the real rate on a car loan</span></a></li>
+        <li><a href="down-payment-savings.html"><b>Down payment savings</b><span>How long to save for your down payment</span></a></li>
+        <li><a href="pay-off-car-loan-early.html"><b>Pay off early</b><span>Interest saved with extra payments</span></a></li>
+        <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
+        <li><a href="negative-equity.html" aria-current="page"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
+        <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Do you owe more than your car is worth?</h1>
+    <p class="lede">Enter what you owe and what the car is worth. The calculator shows your equity today, what a trade-in would add to your next loan, and when the loan balance drops below the car's value.</p>
+  </section>
+
+  <section class="calc" aria-label="Car negative equity calculator">
+    <form class="inputs" onsubmit="return false" novalidate>
+      <p class="note">Example numbers are filled in. Replace them with your own.</p>
+
+      <div class="row">
+        <div class="field">
+          <label for="bal">Loan balance today</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="bal" type="number" inputmode="decimal" min="0" step="100" value="28000"></div>
+          <p class="hint">The payoff amount from your lender.</p>
+        </div>
+        <div class="field">
+          <label for="value">Car value today</label>
+          <div class="control has-pre"><span class="pre">$</span><input id="value" type="number" inputmode="decimal" min="0" step="100" value="24000"></div>
+          <p class="hint">Check a used car pricing guide or dealer offers.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="apr">Loan APR</label>
+          <div class="control has-suf"><input id="apr" type="number" inputmode="decimal" min="0" step="0.1" value="7.9"><span class="suf">%</span></div>
+        </div>
+        <div class="field">
+          <label for="n">Months left on the loan</label>
+          <div class="control"><input id="n" type="number" inputmode="numeric" min="1" max="120" step="1" value="60"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="dep">Value the car loses each year</label>
+        <div class="control has-suf"><input id="dep" type="number" inputmode="decimal" min="0" max="90" step="1" value="15"><span class="suf">%</span></div>
+        <p class="hint">Example rate. It varies by make, model, and mileage, so adjust it for your car.</p>
+      </div>
+
+      <div class="financed"><span>Regular monthly payment</span><strong id="pay">$0</strong></div>
+    </form>
+
+    <div class="results" aria-live="polite">
+      <p class="msg" id="msg" hidden></p>
+      <div id="body">
+        <div>
+          <p class="eyebrow">Your equity today</p>
+          <p class="big" id="resBig">$0</p>
+          <p class="sub" id="resSub"></p>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span>Car value</span><b id="sVal">$0</b></div>
+          <div class="stat"><span>Loan balance</span><b id="sBal">$0</b></div>
+          <div class="stat"><span>Break-even</span><b id="sBreak">-</b></div>
+          <div class="stat"><span>Added to next loan if you trade in now</span><b id="sRoll">$0</b></div>
+        </div>
+
+        <div class="tablewrap">
+          <h2>Value and balance over time</h2>
+          <table>
+            <thead><tr><th scope="col">When</th><th scope="col">Car value</th><th scope="col">Loan balance</th><th scope="col">Equity</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <article class="read">
+    <h2>What negative equity means</h2>
+    <p>Equity is the car's value minus what you owe on it. If you owe more than the car is worth, your equity is negative. People also call this being underwater or upside down on the loan.</p>
+
+    <h2>Why it happens</h2>
+    <ul>
+      <li>New cars lose value fastest in the first year, often faster than the loan balance falls.</li>
+      <li>A small down payment or a long loan term keeps the balance high for longer.</li>
+      <li>Rolling an old loan's balance into a new loan starts you underwater on day one.</li>
+    </ul>
+
+    <h2>How this calculator works</h2>
+    <p>It finds your regular payment from the balance, APR, and months left, then tracks the loan balance month by month. The car's value falls by the yearly percentage you enter. Break-even is the first month when the car's value is at least the loan balance. The value is an estimate, so treat the result as a guide and check your car's real value with a pricing guide or dealer offers.</p>
+
+    <h2>What to do if you are underwater</h2>
+    <ul>
+      <li>Keep making payments. The balance falls every month while the value falls more slowly as the car ages.</li>
+      <li>Pay extra toward the principal. The <a href="pay-off-car-loan-early.html">pay off early calculator</a> shows how much that speeds up break-even.</li>
+      <li>Avoid trading in until you reach break-even. A trade-in with negative equity adds the gap to your next loan.</li>
+      <li>Ask whether GAP coverage makes sense. It can cover the difference between what you owe and what insurance pays if the car is totaled.</li>
+      <li>Look at a lower rate with the <a href="car-loan-refinance.html">refinance calculator</a>, though lenders may limit loans on cars worth less than the balance.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+    <details><summary>Is it bad to trade in a car with negative equity?</summary><p>It usually means a larger next loan, since the gap is rolled into it. That makes the new loan more likely to be underwater too. Waiting until break-even, or paying the gap in cash, avoids that.</p></details>
+    <details><summary>How do I find my car's value?</summary><p>Use a used car pricing guide such as Kelley Blue Book or Edmunds, and compare with offers from dealers or online car buyers. Use the trade-in value if you plan to trade it in.</p></details>
+    <details><summary>How do I find my loan balance?</summary><p>Ask your lender for the payoff amount, or check your online account. The payoff amount can be a little higher than the balance on your statement because of interest that builds up between payments.</p></details>
+    <details><summary>What is GAP insurance?</summary><p>Guaranteed asset protection, or GAP, coverage pays the difference between the car's value and your loan balance if the car is totaled or stolen. It is optional and costs extra, so compare prices from your insurer and the dealer.</p></details>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Results are estimates for information only and are not financial advice. A pricing guide or dealer offer gives the real value of your car.</p>
+    <nav aria-label="Site">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <nav class="more" aria-label="Calculators">
+      <strong>Calculators</strong>
+      <a href="index.html">Car APR</a>
+      <a href="down-payment-savings.html">Down payment savings</a>
+      <a href="pay-off-car-loan-early.html">Pay off early</a>
+      <a href="car-loan-refinance.html">Refinance</a>
+      <a href="negative-equity.html">Negative equity</a>
+      <a href="gig-driver-profit.html">Gig driver profit</a>
+    </nav>
+  </div>
+</footer>
+<!--INLINE:site.js-->
+
+<script>
+// MATH-START
+function monthlyPayment(L, aprPct, n) {
+  var r = aprPct / 1200;
+  if (r < 1e-12) return L / n;
+  return L * r / (1 - Math.pow(1 + r, -n));
+}
+// Month-by-month path. Index m holds the car value, loan balance, and equity after m payments.
+function equityPath(B, aprPct, n, value0, depPct) {
+  var r = aprPct / 1200, M = monthlyPayment(B, aprPct, n), bal = B, path = [];
+  for (var m = 0; m <= n; m++) {
+    if (m > 0) bal = m === n ? 0 : Math.max(bal * (1 + r) - M, 0);
+    var value = value0 * Math.pow(1 - depPct / 100, m / 12);
+    path.push({ m: m, value: value, bal: bal, eq: value - bal });
+  }
+  return path;
+}
+function breakEvenMonth(path) {
+  for (var i = 0; i < path.length; i++) if (path[i].eq >= 0) return path[i].m;
+  return null;
+}
+// MATH-END
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var num = function (id) { var v = parseFloat($(id).value); return isFinite(v) ? v : 0; };
+  var usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  var usd2 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var signed = function (v) { return (v < 0 ? '-' : '') + usd0.format(Math.abs(v)); };
+
+  function when(m) {
+    var d = new Date();
+    d.setMonth(d.getMonth() + m);
+    return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  }
+  function label(m) {
+    if (m === 0) return 'Today';
+    if (m % 12 === 0) { var y = m / 12; return y + (y === 1 ? ' year' : ' years'); }
+    return m + ' months';
+  }
+  function showError(text) {
+    $('msg').textContent = text;
+    $('msg').hidden = false;
+    $('body').hidden = true;
+  }
+
+  function render() {
+    var B = num('bal'), value = num('value'), apr = num('apr'), n = Math.round(num('n')), dep = num('dep');
+    $('pay').textContent = '$0';
+    if (!(B > 0)) return showError('Enter your loan balance to get started.');
+    if (!(value > 0)) return showError('Enter what the car is worth today.');
+    if (!(n >= 1) || n > 120) return showError('Enter the months left on your loan, from 1 to 120.');
+    if (apr < 0 || apr > 100) return showError('Enter an APR between 0% and 100%.');
+    if (dep < 0 || dep > 90) return showError('Enter a yearly value loss between 0% and 90%.');
+
+    var path = equityPath(B, apr, n, value, dep);
+    var eq0 = path[0].eq, be = breakEvenMonth(path);
+    $('pay').textContent = usd2.format(monthlyPayment(B, apr, n));
+    $('msg').hidden = true;
+    $('body').hidden = false;
+
+    $('resBig').textContent = signed(eq0);
+    $('resBig').style.color = eq0 < 0 ? 'var(--warm)' : '';
+    if (eq0 >= 0) {
+      $('resSub').textContent = 'Your car is worth ' + usd0.format(eq0) + ' more than you owe, so you could sell or trade it in without a gap.';
+    } else {
+      $('resSub').textContent = 'You owe ' + usd0.format(-eq0) + ' more than the car is worth. ' +
+        (be === null ? '' : 'If your car loses value at this pace, you reach break-even around ' + when(be) + '.');
+    }
+    $('sVal').textContent = usd0.format(value);
+    $('sBal').textContent = usd0.format(B);
+    $('sBreak').textContent = eq0 >= 0 ? 'Already there' : (be === null ? 'Not before payoff' : 'In ' + be + (be === 1 ? ' month' : ' months'));
+    $('sRoll').textContent = usd0.format(Math.max(-eq0, 0));
+
+    var tbody = $('rows');
+    tbody.textContent = '';
+    path.filter(function (p) { return p.m % 12 === 0; }).slice(0, 8).forEach(function (p) {
+      var tr = document.createElement('tr');
+      if (p.m === 0) tr.className = 'now';
+      [label(p.m), usd0.format(p.value), usd0.format(p.bal), signed(p.eq)].forEach(function (t) {
+        var td = document.createElement('td');
+        td.textContent = t;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  ['bal', 'value', 'apr', 'n', 'dep'].forEach(function (id) { $(id).addEventListener('input', render); });
+  render();
+})();
+</script>
+</body>
+</html>
