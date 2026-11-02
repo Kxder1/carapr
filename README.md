@@ -35,3 +35,5 @@ The build needs Python 3 and Node. It rewrites everything in `dist/`.
 Country rules were checked in October 2026. Rates, caps and tax figures change, so review `src/countries.js` at least once a year (the IRS mileage rate changes every January).
 
 Contact: contact@carapr.org
+
+Pushes to `main` deploy to carapr.org automatically through Cloudflare Workers Builds.
