@@ -43,6 +43,8 @@ PICKER = '''<div class="country" translate="no">
 COUNTRY_NAV = '<nav class="more" aria-label="By country">\n      <strong>By country</strong>\n      <a href="index.html">United States</a>\n' + \
     ''.join(f'      <a href="{LANDING[c]["file"]}">{LANDING[c]["short"]}</a>\n' for c in ORDER) + '    </nav>'
 
+MADE_BY = '<p class="made">carapr.org is a <a href="https://klauderlabs.com" rel="noopener">KlauderLabs</a> site.</p>'
+
 CALC_PAGES = ['index', 'pay-off-car-loan-early', 'car-loan-refinance', 'negative-equity', 'down-payment-savings', 'gig-driver-profit']
 
 
@@ -64,7 +66,8 @@ def faq_schema(pairs):
 def app_schema(name, url, desc):
     return {"@context": "https://schema.org", "@type": "WebApplication", "name": name, "url": url, "description": desc,
             "applicationCategory": "FinanceApplication", "operatingSystem": "Any", "isAccessibleForFree": True,
-            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}
+            "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+            "publisher": {"@type": "Organization", "name": "KlauderLabs", "url": "https://klauderlabs.com"}}
 
 
 def head_meta(s, key):
@@ -91,6 +94,8 @@ def assemble(name, s):
         s = s.replace('</body>', '<script>\n' + engine + '\nCAR.init();\n</script>\n</body>', 1)
     s = s.replace('    <div class="menu">', PICKER, 1)
     s, n = re.subn(r'(<nav class="more" aria-label="Calculators">.*?</nav>)', lambda m: m.group(1) + '\n    ' + COUNTRY_NAV, s, count=1, flags=re.S)
+    assert n == 1, name
+    s, n = re.subn(r'  </div>\n</footer>', '    ' + MADE_BY + '\n  </div>\n</footer>', s, count=1)
     assert n == 1, name
     return s
 
