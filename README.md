@@ -25,6 +25,8 @@ The build needs Python 3 and Node. It rewrites everything in `dist/`.
 | `src/countries.js` | Each country's loan rules, currency, example figures and sources |
 | `src/engine.js` | Country picker, currency formatting, loan math, analytics events |
 | `src/landing.py` | Text for the country landing pages, including local-language sections |
+| `src/guides.py` | The car loan guides. Every worked example was calculated with the site's formulas |
+| `src/trust.py` | How we calculate, editorial policy, and the extra About page text |
 | `src/style.css`, `src/site.js` | Shared styles and the Calculators menu |
 | `build.py` | Puts it all together into `dist/` and writes `sitemap.xml` |
 

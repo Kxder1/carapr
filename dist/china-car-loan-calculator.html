@@ -259,6 +259,19 @@ footer .more strong { color: var(--ink); font-weight: 600; }
 
 footer .made { flex-basis: 100%; }
 footer .made a { color: var(--ink); font-weight: 600; }
+
+/* Guides and review dates */
+.reviewed { margin: 10px 0 0; color: var(--muted); font-size: 0.85rem; }
+.reviewed a { color: var(--muted); }
+.read h3 { font: 600 1.1rem/1.3 var(--body); margin: 26px 0 8px; }
+.read ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 6px; }
+.read a { color: var(--accent); }
+.read h2 a { color: var(--ink); text-decoration-color: var(--line); }
+table.guide { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-variant-numeric: tabular-nums; font-size: 0.95rem; display: block; overflow-x: auto; }
+table.guide th, table.guide td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.guide th { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+footer nav { flex-wrap: wrap; row-gap: 8px; }
 </style>
 <script type="application/ld+json">
 {
@@ -353,6 +366,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
         <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
         <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
         <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+        <li><a href="guides.html"><b>Guides</b><span>Car loan explainers with worked examples</span></a></li>
       </ul>
     </div>
   </div>
@@ -362,6 +376,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <section class="hero">
     <h1>车贷计算器：月供与真实年化利率</h1>
     <p class="lede">Find the real annualized rate (年化利率) of a Chinese car loan from your monthly payment, and see what a “0% plus handling fee” deal really costs. Figures in yuan.</p>
+    <p class="reviewed">Last reviewed November 3, 2026 · <a href="how-we-calculate.html">How we calculate</a> · <a href="editorial-policy.html">Editorial policy</a></p>
   </section>
 
   <section class="calc" aria-label="Car loan APR calculator">
@@ -475,6 +490,11 @@ footer .made a { color: var(--ink); font-weight: 600; }
     <h2>Car APR calculator in Chinese yuan</h2>
     <p>This car loan calculator works in Chinese yuan renminbi (CNY, RMB, ¥). Enter the car price, down payment, term and monthly payment in Chinese yuan to find the real interest rate, or enter a rate to get the monthly payment and total interest. It is not a currency converter: every amount stays in Chinese yuan, and the math follows the loan rules in China, including the APR (年化利率) that lenders there must show.</p>
 
+    <h2>Worked example: a typical car loan in China</h2>
+    <p>A ¥180,000 car with ¥36,000 down leaves ¥144,000 to finance. Over 36 months at 3.5% (年化利率), the monthly payment is <strong>¥4,219.50</strong> and the total interest is <strong>¥7,902</strong>. As a nominal rate that is 3.50% a year; as an effective rate, 3.56%.</p>
+    <p>A “0% interest” deal on the same ¥144,000 with an 8% handling fee (¥11,520) has a payment of ¥4,000.00, but its real annualized rate is 5.49%, because you only had the use of ¥132,480.</p>
+    <p>These are example figures for a typical loan. Enter your own numbers in the calculator above.</p>
+
     <h2>Car loan rules in China</h2>
     <ul>
       <li>Since 2021 every loan must show its annualized rate (年化利率) on the balance actually owed, including fees. From 1 August 2026 lenders, including auto finance companies, must also show the total annualized financing cost (综合融资成本), and a daily or monthly rate cannot replace it.</li>
@@ -526,6 +546,9 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <div class="wrap">
     <p>Results are estimates for information only and are not financial advice. Your lender's disclosed APR is the official figure.</p>
     <nav aria-label="Site">
+      <a href="guides.html">Guides</a>
+      <a href="how-we-calculate.html">How we calculate</a>
+      <a href="editorial-policy.html">Editorial policy</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>

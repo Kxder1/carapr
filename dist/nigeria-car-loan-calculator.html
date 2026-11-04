@@ -259,6 +259,19 @@ footer .more strong { color: var(--ink); font-weight: 600; }
 
 footer .made { flex-basis: 100%; }
 footer .made a { color: var(--ink); font-weight: 600; }
+
+/* Guides and review dates */
+.reviewed { margin: 10px 0 0; color: var(--muted); font-size: 0.85rem; }
+.reviewed a { color: var(--muted); }
+.read h3 { font: 600 1.1rem/1.3 var(--body); margin: 26px 0 8px; }
+.read ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 6px; }
+.read a { color: var(--accent); }
+.read h2 a { color: var(--ink); text-decoration-color: var(--line); }
+table.guide { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-variant-numeric: tabular-nums; font-size: 0.95rem; display: block; overflow-x: auto; }
+table.guide th, table.guide td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.guide th { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+footer nav { flex-wrap: wrap; row-gap: 8px; }
 </style>
 <script type="application/ld+json">
 {
@@ -351,6 +364,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
         <li><a href="car-loan-refinance.html"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
         <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
         <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+        <li><a href="guides.html"><b>Guides</b><span>Car loan explainers with worked examples</span></a></li>
       </ul>
     </div>
   </div>
@@ -360,6 +374,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <section class="hero">
     <h1>Car loan calculator for Nigeria</h1>
     <p class="lede">Work out your monthly car loan repayment in naira, find the real interest rate from a repayment you were quoted, and see what a flat rate really costs.</p>
+    <p class="reviewed">Last reviewed November 3, 2026 · <a href="how-we-calculate.html">How we calculate</a> · <a href="editorial-policy.html">Editorial policy</a></p>
   </section>
 
   <section class="calc" aria-label="Car loan APR calculator">
@@ -467,6 +482,11 @@ footer .made a { color: var(--ink); font-weight: 600; }
     <h2>Car APR calculator in Nigerian naira</h2>
     <p>This car loan calculator works in Nigerian naira (NGN, ₦). Enter the car price, down payment, term and monthly payment in Nigerian naira to find the real interest rate, or enter a rate to get the monthly payment and total interest. It is not a currency converter: every amount stays in Nigerian naira, and the math follows the loan rules in Nigeria, including the APR that lenders there must show.</p>
 
+    <h2>Worked example: a typical car loan in Nigeria</h2>
+    <p>A ₦15,000,000 car with ₦4,500,000 down leaves ₦10,500,000 to finance. Over 36 months at 28%, the monthly payment is <strong>₦434,317.67</strong> and the total interest is <strong>₦5,135,436</strong>. As a nominal rate that is 28.00% a year; as an effective rate, 31.89%.</p>
+    <p>If a lender quoted 15.5% flat instead, the monthly repayment would be ₦427,291.67, which looks cheaper but works out to 26.76% on a reducing balance. Always ask for the reducing-balance rate or APR.</p>
+    <p>These are example figures for a typical loan. Enter your own numbers in the calculator above.</p>
+
     <h2>Car loan rules in Nigeria</h2>
     <ul>
       <li>Banks quote car loans as a percentage per annum, often 22% to 36%. CBN consumer protection rules require a key-facts statement showing the total cost of credit.</li>
@@ -515,6 +535,9 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <div class="wrap">
     <p>Results are estimates for information only and are not financial advice. Your lender's disclosed APR is the official figure.</p>
     <nav aria-label="Site">
+      <a href="guides.html">Guides</a>
+      <a href="how-we-calculate.html">How we calculate</a>
+      <a href="editorial-policy.html">Editorial policy</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>

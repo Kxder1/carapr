@@ -255,6 +255,19 @@ footer .more strong { color: var(--ink); font-weight: 600; }
 
 footer .made { flex-basis: 100%; }
 footer .made a { color: var(--ink); font-weight: 600; }
+
+/* Guides and review dates */
+.reviewed { margin: 10px 0 0; color: var(--muted); font-size: 0.85rem; }
+.reviewed a { color: var(--muted); }
+.read h3 { font: 600 1.1rem/1.3 var(--body); margin: 26px 0 8px; }
+.read ol { padding-left: 1.3rem; display: flex; flex-direction: column; gap: 6px; }
+.read a { color: var(--accent); }
+.read h2 a { color: var(--ink); text-decoration-color: var(--line); }
+table.guide { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-variant-numeric: tabular-nums; font-size: 0.95rem; display: block; overflow-x: auto; }
+table.guide th, table.guide td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.guide th { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+
+footer nav { flex-wrap: wrap; row-gap: 8px; }
 </style>
 <script type="application/ld+json">
 {
@@ -341,6 +354,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
         <li><a href="car-loan-refinance.html" aria-current="page"><b>Refinance</b><span>See if a lower rate saves money</span></a></li>
         <li><a href="negative-equity.html"><b>Negative equity</b><span>Do you owe more than it's worth</span></a></li>
         <li><a href="gig-driver-profit.html"><b>Gig driver profit</b><span>Real hourly pay after car costs</span></a></li>
+        <li><a href="guides.html"><b>Guides</b><span>Car loan explainers with worked examples</span></a></li>
       </ul>
     </div>
   </div>
@@ -350,6 +364,7 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <section class="hero">
     <h1>Would refinancing your car loan save money?</h1>
     <p class="lede">Enter your current loan and the offer you are considering. The calculator compares the payments, the total cost, and how long it takes to make back any fees.</p>
+    <p class="reviewed">Last reviewed November 3, 2026 · <a href="how-we-calculate.html">How we calculate</a> · <a href="editorial-policy.html">Editorial policy</a></p>
   </section>
 
   <section class="calc" aria-label="Car loan refinance calculator">
@@ -456,6 +471,9 @@ footer .made a { color: var(--ink); font-weight: 600; }
   <div class="wrap">
     <p>Results are estimates for information only and are not financial advice. A lender's written offer is the official figure.</p>
     <nav aria-label="Site">
+      <a href="guides.html">Guides</a>
+      <a href="how-we-calculate.html">How we calculate</a>
+      <a href="editorial-policy.html">Editorial policy</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
